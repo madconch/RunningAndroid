@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">HelperLibrary</string>
+    <string name="network_error">网络连接失败,请检查网络</string>
+    <string name="network_response_code_error_default">服务器异常,请稍后重试</string>
+    <string name="network_response_parse_error">返回值解析失败</string>
+    <string name="network_need_re_login">会话过期,请重新登录后再试</string>
+    <string name="network_unknown_error">未知异常</string>
+</resources>

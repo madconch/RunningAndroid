@@ -6,7 +6,7 @@
 /build
 /captures
 .externalNativeBuild
-/helperlibrary/build
+/baselibrary/build
 /uiconfig/build
 /uiimpl01/build
 /uilibrary/build
