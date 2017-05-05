@@ -1,5 +1,15 @@
 apply plugin: 'com.android.library'
+apply from: file("${rootDir}/bintray.gradle")
 
+ext {
+    //bintrayInfo
+    bintrayName = 'utillibrary'
+
+    //library info
+    libraryName = 'utillibrary'
+    artifact = 'utillibrary'
+    libraryDescription = 'Running Android - common utils collection'
+}
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -33,3 +43,6 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

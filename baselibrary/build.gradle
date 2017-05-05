@@ -1,4 +1,15 @@
 apply plugin: 'com.android.library'
+apply from: file("${rootDir}/bintray.gradle")
+
+ext {
+    //bintrayInfo
+    bintrayName = 'baselibrary'
+
+    //library info
+    libraryName = 'baselibrary'
+    artifact = 'baselibrary'
+    libraryDescription = 'Running Android - the base library'
+}
 
 android {
     compileSdkVersion 25
@@ -41,3 +52,6 @@ dependencies {
 
     compile 'com.android.support:recyclerview-v7:25.3.1'
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

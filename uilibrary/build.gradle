@@ -1,6 +1,16 @@
 apply plugin: 'com.android.library'
 apply from: file("${project.rootDir}/madconfig.gradle")
+apply from: file("${rootDir}/bintray.gradle")
 
+ext {
+    //bintrayInfo
+    bintrayName = 'uilibrary'
+
+    //library info
+    libraryName = 'uilibrary'
+    artifact = 'uilibrary'
+    libraryDescription = 'Running Android - the ui library'
+}
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -32,3 +42,6 @@ dependencies {
     compile project(':uiconfig')
     compile uiImplModuleConfig['module']
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
