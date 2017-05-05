@@ -11,8 +11,8 @@ import java.util.ArrayList;
  */
 
 
-public abstract class BaseAdapter<T,V extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<V> {
-    private ArrayList<T>  datas = new ArrayList<>();
+public abstract class BaseAdapter<T, V extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<V> {
+    private ArrayList<T> datas = new ArrayList<>();
 
     public ArrayList<T> getDatas() {
         return datas;
