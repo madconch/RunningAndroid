@@ -7,7 +7,7 @@ import com.madconch.running.base.helper.paging.ILifeCycleProvider;
 import com.madconch.running.base.helper.paging.ILoadingProvider;
 import com.madconch.running.base.helper.paging.IPagingProvider;
 import com.madconch.running.base.helper.paging.IRefreshProvider;
-import com.madconch.running.base.net.MadNetExceptionHelper;
+import com.madconch.running.base.net.MadRequestExceptionHelper;
 import com.madconch.running.ui.dialog.MadProgressDialog;
 import com.madconch.running.ui.toast.MadToast;
 
@@ -94,7 +94,7 @@ public class TransformerProvider {
                             @Override
                             public void accept(@NonNull Throwable throwable) throws Exception {
                                 throwable.printStackTrace();
-                                MadToast.error(MadNetExceptionHelper.getErrorMessage(throwable));
+                                MadToast.error(MadRequestExceptionHelper.getErrorMessage(throwable));
                             }
                         });
             }
@@ -129,7 +129,7 @@ public class TransformerProvider {
                             @Override
                             public void accept(@NonNull Throwable throwable) throws Exception {
                                 if (!refreshProvider.haveData()) {//没有数据切换到错误布局
-                                    refreshProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadNetExceptionHelper.getLayoutStateByThrowable(throwable));
+                                    refreshProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadRequestExceptionHelper.getLayoutStateByThrowable(throwable));
                                 }
                             }
                         })
@@ -182,7 +182,7 @@ public class TransformerProvider {
                             @Override
                             public void accept(@NonNull Throwable throwable) throws Exception {
                                 if (!pagingProvider.haveData()) {//没有数据切换到错误布局
-                                    pagingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadNetExceptionHelper.getLayoutStateByThrowable(throwable));
+                                    pagingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadRequestExceptionHelper.getLayoutStateByThrowable(throwable));
                                 }
                             }
                         })
@@ -240,7 +240,7 @@ public class TransformerProvider {
                         .doOnError(new Consumer<Throwable>() {
                             @Override
                             public void accept(@NonNull Throwable throwable) throws Exception {
-                                loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadNetExceptionHelper.getLayoutStateByThrowable(throwable));
+                                loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadRequestExceptionHelper.getLayoutStateByThrowable(throwable));
                             }
                         })
                         .doOnComplete(new Action() {
@@ -270,7 +270,7 @@ public class TransformerProvider {
                         .doOnError(new Consumer<Throwable>() {
                             @Override
                             public void accept(@NonNull Throwable throwable) throws Exception {
-                                loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadNetExceptionHelper.getLayoutStateByThrowable(throwable));
+                                loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadRequestExceptionHelper.getLayoutStateByThrowable(throwable));
                             }
                         })
                         .doOnComplete(new Action() {
@@ -307,7 +307,7 @@ public class TransformerProvider {
                             @Override
                             public void accept(@NonNull Throwable throwable) throws Exception {
                                 if (!loadingProvider.haveData()) {
-                                    loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadNetExceptionHelper.getLayoutStateByThrowable(throwable));
+                                    loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadRequestExceptionHelper.getLayoutStateByThrowable(throwable));
                                 }
                             }
                         })

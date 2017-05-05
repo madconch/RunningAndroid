@@ -10,9 +10,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.madconch.running.ui.R;
 import com.madconch.running.uiconfig.loading.ILoadingHelperConfig;
 import com.madconch.running.uiimpl.loading.LoadingHelperConfig;
-import com.madconch.running.ui.R;
 
 
 /**
@@ -21,7 +21,7 @@ import com.madconch.running.ui.R;
  */
 
 public class MadLoadingHelper implements ILoadingHelper {
-    private ILoadingHelperConfig config;
+    private ILoadingHelperConfig config = new LoadingHelperConfig();
     private State state = State.NORMAL;
     private IVaryViewHelper helper;
     private String loadingMessage;
@@ -39,7 +39,6 @@ public class MadLoadingHelper implements ILoadingHelper {
 
     private MadLoadingHelper(@NonNull View view) {
         helper = new VaryViewHelper(view);
-        config = new LoadingHelperConfig();
     }
 
     public static synchronized MadLoadingHelper with(View view) {

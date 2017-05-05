@@ -26,7 +26,7 @@ import retrofit2.HttpException;
  * Email:496349136@qq.com
  */
 
-public class MadNetExceptionHelper {
+public class MadRequestExceptionHelper {
     public static ILoadingHelper.State getLayoutStateByThrowable(Throwable ex) {
         if (ex instanceof ConnectException || ex instanceof SocketTimeoutException || ex instanceof UnknownHostException || ex instanceof SocketException) {
             if (!MadNetworkUtils.isConnected()) {

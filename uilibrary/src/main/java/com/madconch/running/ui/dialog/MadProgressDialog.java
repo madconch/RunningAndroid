@@ -20,6 +20,7 @@ import com.madconch.running.uiimpl.dialog.ProgressDialogConfig;
  */
 
 public class MadProgressDialog extends Dialog {
+    private IProgressDialogConfig config = new ProgressDialogConfig();
     private TextView messageView;
 
     public MadProgressDialog(@NonNull Context context) {
@@ -38,7 +39,6 @@ public class MadProgressDialog extends Dialog {
     }
 
     protected void init() {
-        IProgressDialogConfig config = new ProgressDialogConfig();
         setContentView(config.provideLayoutResource());
         messageView = (TextView) findViewById(config.provideMessageTextViewId());
     }
