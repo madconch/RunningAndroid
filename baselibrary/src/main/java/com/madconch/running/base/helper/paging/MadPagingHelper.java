@@ -1,14 +1,14 @@
-package com.madconch.running.base.paging;
+package com.madconch.running.base.helper.paging;
 
 import android.support.annotation.NonNull;
 
 import com.madconch.running.base.common.RetryListener;
-import com.madconch.running.base.common.SimpleSubscriber;
+import com.madconch.running.base.common.SimpleObserver;
 import com.madconch.running.base.common.TransformerProvider;
 import com.madconch.running.ui.loading.ILoadingHelper;
 import com.madconch.running.uiconfig.refresh.IRefreshLayout;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * 功能描述:分页帮助工具
@@ -100,7 +100,7 @@ public class MadPagingHelper<T> implements IRefreshLayout.OnRefreshLoadMoreListe
     protected void requestData(final int pageIndex, final int pageSize){
         pagingCallback.onRequestData(pageIndex,pageSize)
                 .compose(TransformerProvider.<T>providePagingTransformer(lifeCycleProvider,pagingProvider,refreshRetryListener))
-                .subscribe(new SimpleSubscriber<T>(){
+                .subscribe(new SimpleObserver<T>(){
                     @Override
                     public void onNext(T t) {
                         super.onNext(t);

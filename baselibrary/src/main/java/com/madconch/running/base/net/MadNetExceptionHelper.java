@@ -1,4 +1,4 @@
-package com.madconch.running.base.paging;
+package com.madconch.running.base.net;
 
 import android.content.Context;
 import android.net.ParseException;
@@ -6,9 +6,9 @@ import android.support.annotation.StringRes;
 
 import com.google.gson.JsonParseException;
 import com.madconch.running.base.R;
-import com.madconch.running.base.config.MadHelperConfig;
-import com.madconch.running.base.net.CodeException;
+import com.madconch.running.base.config.BaseConfig;
 import com.madconch.running.ui.loading.ILoadingHelper;
+import com.madconch.running.ui.toast.MadToast;
 import com.madconch.running.utillibrary.MadNetworkUtils;
 
 import org.json.JSONException;
@@ -26,7 +26,7 @@ import retrofit2.HttpException;
  * Email:496349136@qq.com
  */
 
-public class MadErrorStateHelper {
+public class MadNetExceptionHelper {
     public static ILoadingHelper.State getLayoutStateByThrowable(Throwable ex) {
         if (ex instanceof ConnectException || ex instanceof SocketTimeoutException || ex instanceof UnknownHostException || ex instanceof SocketException) {
             if (!MadNetworkUtils.isConnected()) {
@@ -61,7 +61,7 @@ public class MadErrorStateHelper {
     }
 
     public static String getErrorMessage(Throwable ex, @StringRes int unknownErrorMsg) {
-        return getErrorMessage(MadHelperConfig.getContextProvider().provideContext(), ex, unknownErrorMsg);
+        return getErrorMessage(BaseConfig.getContextProvider().provideContext(), ex, unknownErrorMsg);
     }
 
     public static String getErrorMessage(Context context, Throwable ex) {
@@ -69,6 +69,10 @@ public class MadErrorStateHelper {
     }
 
     public static String getErrorMessage(Throwable ex) {
-        return getErrorMessage(MadHelperConfig.getContextProvider().provideContext(), ex);
+        return getErrorMessage(BaseConfig.getContextProvider().provideContext(), ex);
+    }
+
+    public static void tip(Throwable ex) {
+        MadToast.error(getErrorMessage(ex));
     }
 }

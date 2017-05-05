@@ -1,6 +1,6 @@
-package com.madconch.running.base.paging;
+package com.madconch.running.base.helper.paging;
 
-import com.trello.rxlifecycle.LifecycleTransformer;
+import com.trello.rxlifecycle2.LifecycleTransformer;
 
 /**
  * 功能描述:提供请求的生命周期管理

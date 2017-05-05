@@ -1,4 +1,4 @@
-package com.madconch.running.base.paging;
+package com.madconch.running.base.helper.paging;
 
 import com.madconch.running.uiconfig.refresh.IRefreshLayout;
 

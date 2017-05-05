@@ -1,18 +1,25 @@
 package com.madconch.running.base.common;
 
-import com.madconch.running.base.paging.MadErrorStateHelper;
-import com.madconch.running.base.paging.IDialogProvider;
-import com.madconch.running.base.paging.ILifeCycleProvider;
-import com.madconch.running.base.paging.ILoadingProvider;
-import com.madconch.running.base.paging.IPagingProvider;
-import com.madconch.running.base.paging.IRefreshProvider;
+import android.content.DialogInterface;
+
+import com.madconch.running.base.config.ContextProvider;
+import com.madconch.running.base.helper.paging.ILifeCycleProvider;
+import com.madconch.running.base.helper.paging.ILoadingProvider;
+import com.madconch.running.base.helper.paging.IPagingProvider;
+import com.madconch.running.base.helper.paging.IRefreshProvider;
+import com.madconch.running.base.net.MadNetExceptionHelper;
+import com.madconch.running.ui.dialog.MadProgressDialog;
 import com.madconch.running.ui.toast.MadToast;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 功能描述:@TODO 填写功能描述
@@ -50,22 +57,22 @@ public class TransformerProvider {
      *
      * @return
      */
-    public static <T> Observable.Transformer<T, T> provideSchedulers() {
-        return new Observable.Transformer<T, T>() {
+    public static <T> ObservableTransformer<T, T> provideSchedulers() {
+        return new ObservableTransformer<T, T>() {
             @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
             }
         };
     }
 
-    public static <T> Observable.Transformer<T, T> provideSchedulers(final ILifeCycleProvider lifeCycleProvider) {
-        return new Observable.Transformer<T, T>() {
+    public static <T> ObservableTransformer<T, T> provideSchedulers(final ILifeCycleProvider lifeCycleProvider) {
+        return new ObservableTransformer<T, T>() {
             @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream
                         .compose(lifeCycleProvider.<T>bindLifecycle())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
@@ -78,16 +85,16 @@ public class TransformerProvider {
      *
      * @return
      */
-    public static <T> Observable.Transformer<T, T> provideErrorHandler() {
-        return new Observable.Transformer<T, T>() {
+    public static <T> ObservableTransformer<T, T> provideErrorHandler() {
+        return new ObservableTransformer<T, T>() {
             @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable
-                        .doOnError(new Action1<Throwable>() {
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream
+                        .doOnError(new Consumer<Throwable>() {
                             @Override
-                            public void call(Throwable throwable) {
+                            public void accept(@NonNull Throwable throwable) throws Exception {
                                 throwable.printStackTrace();
-                                MadToast.error(MadErrorStateHelper.getErrorMessage(throwable));
+                                MadToast.error(MadNetExceptionHelper.getErrorMessage(throwable));
                             }
                         });
             }
@@ -102,33 +109,33 @@ public class TransformerProvider {
      * @param retryListener  提供重试接口
      * @return
      */
-    public static <T> Observable.Transformer<T, T> provideRefreshTransformer(final ILifeCycleProvider lifeCycle, final IRefreshProvider refreshProvider, final RetryListener retryListener) {
-        return new Observable.Transformer<T, T>() {
+    public static <T> ObservableTransformer<T, T> provideRefreshTransformer(final ILifeCycleProvider lifeCycle, final IRefreshProvider refreshProvider, final RetryListener retryListener) {
+        return new ObservableTransformer<T, T>() {
             @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream
                         .compose(lifeCycle.<T>bindLifecycle())
                         .compose(TransformerProvider.<T>provideSchedulers())
                         .compose(TransformerProvider.<T>provideErrorHandler())
-                        .doOnSubscribe(new Action0() {
+                        .doOnSubscribe(new Consumer<Disposable>() {
                             @Override
-                            public void call() {
-                                if(!refreshProvider.haveData()){
+                            public void accept(@NonNull Disposable disposable) throws Exception {
+                                if (!refreshProvider.haveData()) {
                                     refreshProvider.provideLoadingHelper().setRetryListener(retryListener).showLoading();
                                 }
                             }
                         })
-                        .doOnError(new Action1<Throwable>() {
+                        .doOnError(new Consumer<Throwable>() {
                             @Override
-                            public void call(Throwable throwable) {
+                            public void accept(@NonNull Throwable throwable) throws Exception {
                                 if (!refreshProvider.haveData()) {//没有数据切换到错误布局
-                                    refreshProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadErrorStateHelper.getLayoutStateByThrowable(throwable));
+                                    refreshProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadNetExceptionHelper.getLayoutStateByThrowable(throwable));
                                 }
                             }
                         })
-                        .doOnCompleted(new Action0() {
+                        .doOnComplete(new Action() {
                             @Override
-                            public void call() {
+                            public void run() throws Exception {
                                 if (refreshProvider.haveData()) {//有数据显示正常布局
                                     refreshProvider.provideLoadingHelper().setRetryListener(retryListener).restore();
                                 } else {//没有数据切换至空布局
@@ -136,9 +143,9 @@ public class TransformerProvider {
                                 }
                             }
                         })
-                        .doAfterTerminate(new Action0() {
+                        .doAfterTerminate(new Action() {
                             @Override
-                            public void call() {
+                            public void run() throws Exception {
                                 refreshProvider.getRefreshLayout().refreshCompleted();
                                 refreshProvider.getRefreshLayout().loadMoreCompleted();
                             }
@@ -155,33 +162,33 @@ public class TransformerProvider {
      * @param retryListener  提供重试接口
      * @return
      */
-    public static <T> Observable.Transformer<T, T> providePagingTransformer(final ILifeCycleProvider lifeCycle, final IPagingProvider pagingProvider, final RetryListener retryListener) {
-        return new Observable.Transformer<T, T>() {
+    public static <T> ObservableTransformer<T, T> providePagingTransformer(final ILifeCycleProvider lifeCycle, final IPagingProvider pagingProvider, final RetryListener retryListener) {
+        return new ObservableTransformer<T, T>() {
             @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream
                         .compose(lifeCycle.<T>bindLifecycle())
                         .compose(TransformerProvider.<T>provideSchedulers())
                         .compose(TransformerProvider.<T>provideErrorHandler())
-                        .doOnSubscribe(new Action0() {
+                        .doOnSubscribe(new Consumer<Disposable>() {
                             @Override
-                            public void call() {
+                            public void accept(@NonNull Disposable disposable) throws Exception {
                                 if (!pagingProvider.haveData()) {//第一页并且没有数据才替换加载中布局
                                     pagingProvider.provideLoadingHelper().setRetryListener(retryListener).showLoading();
                                 }
                             }
                         })
-                        .doOnError(new Action1<Throwable>() {
+                        .doOnError(new Consumer<Throwable>() {
                             @Override
-                            public void call(Throwable throwable) {
+                            public void accept(@NonNull Throwable throwable) throws Exception {
                                 if (!pagingProvider.haveData()) {//没有数据切换到错误布局
-                                    pagingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadErrorStateHelper.getLayoutStateByThrowable(throwable));
+                                    pagingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadNetExceptionHelper.getLayoutStateByThrowable(throwable));
                                 }
                             }
                         })
-                        .doOnCompleted(new Action0() {
+                        .doOnComplete(new Action() {
                             @Override
-                            public void call() {
+                            public void run() throws Exception {
                                 if (pagingProvider.haveData()) {//有数据显示正常布局
                                     pagingProvider.provideLoadingHelper().setRetryListener(retryListener).restore();
                                 } else {//没有数据切换至空布局
@@ -189,9 +196,9 @@ public class TransformerProvider {
                                 }
                             }
                         })
-                        .doAfterTerminate(new Action0() {
+                        .doAfterTerminate(new Action() {
                             @Override
-                            public void call() {
+                            public void run() throws Exception {
                                 pagingProvider.getRefreshLayout().refreshCompleted();
                                 pagingProvider.getRefreshLayout().loadMoreCompleted();
 
@@ -216,29 +223,29 @@ public class TransformerProvider {
      * @param retryListener   提供重试接口
      * @return
      */
-    public static <T> Observable.Transformer<T, T> provideLoadingTransformer(final ILifeCycleProvider lifeCycle, final ILoadingProvider loadingProvider, final RetryListener retryListener) {
-        return new Observable.Transformer<T, T>() {
+    public static <T> ObservableTransformer<T, T> provideLoadingTransformer(final ILifeCycleProvider lifeCycle, final ILoadingProvider loadingProvider, final RetryListener retryListener) {
+        return new ObservableTransformer<T, T>() {
             @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream
                         .compose(lifeCycle.<T>bindLifecycle())
                         .compose(TransformerProvider.<T>provideSchedulers())
                         .compose(TransformerProvider.<T>provideErrorHandler())
-                        .doOnSubscribe(new Action0() {
+                        .doOnSubscribe(new Consumer<Disposable>() {
                             @Override
-                            public void call() {
+                            public void accept(@NonNull Disposable disposable) throws Exception {
                                 loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showLoading();
                             }
                         })
-                        .doOnError(new Action1<Throwable>() {
+                        .doOnError(new Consumer<Throwable>() {
                             @Override
-                            public void call(Throwable throwable) {
-                                loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadErrorStateHelper.getLayoutStateByThrowable(throwable));
+                            public void accept(@NonNull Throwable throwable) throws Exception {
+                                loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadNetExceptionHelper.getLayoutStateByThrowable(throwable));
                             }
                         })
-                        .doOnCompleted(new Action0() {
+                        .doOnComplete(new Action() {
                             @Override
-                            public void call() {
+                            public void run() throws Exception {
                                 loadingProvider.provideLoadingHelper().setRetryListener(retryListener).restore();
                             }
                         });
@@ -246,32 +253,32 @@ public class TransformerProvider {
         };
     }
 
-    public static <T> Observable.Transformer<T, T> provideLoadingEmptyTransformer(final ILifeCycleProvider lifeCycle, final ILoadingProvider loadingProvider, final RetryListener retryListener) {
-        return new Observable.Transformer<T, T>() {
+    public static <T> ObservableTransformer<T, T> provideLoadingEmptyTransformer(final ILifeCycleProvider lifeCycle, final ILoadingProvider loadingProvider, final RetryListener retryListener) {
+        return new ObservableTransformer<T, T>() {
             @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream
                         .compose(lifeCycle.<T>bindLifecycle())
                         .compose(TransformerProvider.<T>provideSchedulers())
                         .compose(TransformerProvider.<T>provideErrorHandler())
-                        .doOnSubscribe(new Action0() {
+                        .doOnSubscribe(new Consumer<Disposable>() {
                             @Override
-                            public void call() {
+                            public void accept(@NonNull Disposable disposable) throws Exception {
                                 loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showLoading();
                             }
                         })
-                        .doOnError(new Action1<Throwable>() {
+                        .doOnError(new Consumer<Throwable>() {
                             @Override
-                            public void call(Throwable throwable) {
-                                loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadErrorStateHelper.getLayoutStateByThrowable(throwable));
+                            public void accept(@NonNull Throwable throwable) throws Exception {
+                                loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadNetExceptionHelper.getLayoutStateByThrowable(throwable));
                             }
                         })
-                        .doOnCompleted(new Action0() {
+                        .doOnComplete(new Action() {
                             @Override
-                            public void call() {
-                                if(loadingProvider.haveData()){
+                            public void run() throws Exception {
+                                if (loadingProvider.haveData()) {
                                     loadingProvider.provideLoadingHelper().setRetryListener(retryListener).restore();
-                                }else{
+                                } else {
                                     loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showEmpty();
                                 }
                             }
@@ -280,33 +287,33 @@ public class TransformerProvider {
         };
     }
 
-    public static <T> Observable.Transformer<T, T> provideBackgroundLoadingTransformer(final ILifeCycleProvider lifeCycle, final ILoadingProvider loadingProvider, final RetryListener retryListener) {
-        return new Observable.Transformer<T, T>() {
+    public static <T> ObservableTransformer<T, T> provideBackgroundLoadingTransformer(final ILifeCycleProvider lifeCycle, final ILoadingProvider loadingProvider, final RetryListener retryListener) {
+        return new ObservableTransformer<T, T>() {
             @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream
                         .compose(lifeCycle.<T>bindLifecycle())
                         .compose(TransformerProvider.<T>provideSchedulers())
                         .compose(TransformerProvider.<T>provideErrorHandler())
-                        .doOnSubscribe(new Action0() {
+                        .doOnSubscribe(new Consumer<Disposable>() {
                             @Override
-                            public void call() {
-                                if(!loadingProvider.haveData()){
+                            public void accept(@NonNull Disposable disposable) throws Exception {
+                                if (!loadingProvider.haveData()) {
                                     loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showLoading();
                                 }
                             }
                         })
-                        .doOnError(new Action1<Throwable>() {
+                        .doOnError(new Consumer<Throwable>() {
                             @Override
-                            public void call(Throwable throwable) {
-                                if(!loadingProvider.haveData()) {
-                                    loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadErrorStateHelper.getLayoutStateByThrowable(throwable));
+                            public void accept(@NonNull Throwable throwable) throws Exception {
+                                if (!loadingProvider.haveData()) {
+                                    loadingProvider.provideLoadingHelper().setRetryListener(retryListener).showState(MadNetExceptionHelper.getLayoutStateByThrowable(throwable));
                                 }
                             }
                         })
-                        .doOnCompleted(new Action0() {
+                        .doOnComplete(new Action() {
                             @Override
-                            public void call() {
+                            public void run() throws Exception {
                                 loadingProvider.provideLoadingHelper().setRetryListener(retryListener).restore();
                             }
                         });
@@ -314,24 +321,32 @@ public class TransformerProvider {
         };
     }
 
-    public static <T> Observable.Transformer<T, T> provideDialogLoading(final ILifeCycleProvider lifeCycle,final IDialogProvider dialogProvider) {
-        return new Observable.Transformer<T, T>() {
+    public static <T> ObservableTransformer<T, T> provideDialogLoading(final ILifeCycleProvider lifeCycle, ContextProvider contextProvider) {
+        final MadProgressDialog progressDialog = new MadProgressDialog(contextProvider.provideContext());
+        return new ObservableTransformer<T, T>() {
             @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream
                         .compose(lifeCycle.<T>bindLifecycle())
                         .compose(TransformerProvider.<T>provideSchedulers())
                         .compose(TransformerProvider.<T>provideErrorHandler())
-                        .doOnSubscribe(new Action0() {
+                        .doOnSubscribe(new Consumer<Disposable>() {
                             @Override
-                            public void call() {
-                                dialogProvider.setDialogVisible(true);
+                            public void accept(@NonNull final Disposable disposable) throws Exception {
+                                progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                    @Override
+                                    public void onCancel(DialogInterface dialog) {
+                                        if (!disposable.isDisposed())
+                                            disposable.dispose();
+                                    }
+                                });
+                                progressDialog.show();
                             }
                         })
-                        .doAfterTerminate(new Action0() {
+                        .doAfterTerminate(new Action() {
                             @Override
-                            public void call() {
-                                dialogProvider.setDialogVisible(false);
+                            public void run() throws Exception {
+                                progressDialog.dismiss();
                             }
                         });
             }

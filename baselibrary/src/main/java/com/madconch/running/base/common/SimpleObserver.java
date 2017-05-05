@@ -1,6 +1,7 @@
 package com.madconch.running.base.common;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 功能描述:默认空实现了Subscriber,我们只需要处理自己关心的内容
@@ -8,19 +9,24 @@ import rx.Subscriber;
  * Email:496349136@qq.com
  */
 
-public class SimpleSubscriber<T> extends Subscriber<T> {
+public class SimpleObserver<T> implements Observer<T> {
     @Override
-    public void onCompleted() {
+    public void onSubscribe(Disposable d) {
+
+    }
+
+    @Override
+    public void onNext(T t) {
 
     }
 
     @Override
     public void onError(Throwable e) {
-        e.printStackTrace();
+
     }
 
     @Override
-    public void onNext(T t) {
+    public void onComplete() {
 
     }
 }

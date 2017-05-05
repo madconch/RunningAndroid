@@ -1,4 +1,4 @@
-package com.madconch.running.base.paging;
+package com.madconch.running.base.helper.paging;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.madconch.running.base.common.SimpleAdapter;
+import com.madconch.running.base.common.BaseAdapter;
 import com.madconch.running.base.common.ViewHolder;
 import com.madconch.running.ui.loading.ILoadingHelper;
 import com.madconch.running.uiconfig.refresh.IRefreshLayout;
@@ -14,7 +14,7 @@ import com.madconch.running.uiconfig.refresh.IRefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * 功能描述:分页列表帮助类
@@ -42,7 +42,7 @@ public class MadPagingListHelper<T> extends MadPagingHelper<List<T>> implements 
         this.pagingListCallback = pagingListCallback;
     }
 
-    private SimpleAdapter<T, ViewHolder> adapter = new SimpleAdapter<T, ViewHolder>() {
+    private BaseAdapter<T, ViewHolder> adapter = new BaseAdapter<T, ViewHolder>() {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             return new ViewHolder(parent.getContext(), pagingListCallback.provideItemLayout(parent, viewType));
@@ -114,7 +114,7 @@ public class MadPagingListHelper<T> extends MadPagingHelper<List<T>> implements 
         return recyclerView;
     }
 
-    public SimpleAdapter<T, ViewHolder> getAdapter() {
+    public BaseAdapter<T, ViewHolder> getAdapter() {
         return adapter;
     }
 }

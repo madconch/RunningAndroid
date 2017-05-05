@@ -1,11 +1,11 @@
-package com.madconch.running.base.paging;
+package com.madconch.running.base.helper.paging;
 
 import android.support.annotation.NonNull;
 
 import com.madconch.running.ui.loading.ILoadingHelper;
 import com.madconch.running.uiconfig.refresh.IRefreshLayout;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * 功能描述:提供带刷新的场景辅助类

@@ -1,4 +1,4 @@
-package com.madconch.running.base.paging;
+package com.madconch.running.base.helper.paging;
 
 /**
  * 功能描述:分页内容提供接口
