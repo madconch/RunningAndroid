@@ -6,8 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.madconch.running.base.common.BaseAdapter;
-import com.madconch.running.base.common.ViewHolder;
+import com.madconch.running.base.widget.adapter.BaseAdapter;
+import com.madconch.running.base.widget.adapter.ViewHolder;
 import com.madconch.running.ui.loading.ILoadingHelper;
 import com.madconch.running.uiconfig.refresh.IRefreshLayout;
 

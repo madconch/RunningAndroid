@@ -12,7 +12,7 @@ import com.madconch.running.utillibrary.config.MadUtilsConfig;
  * Email:496349136@qq.com
  */
 
-public class BaseConfig {
+public class MadBaseConfig {
     private static ContextProvider contextProvider;
 
     public static void init(final Application context) {

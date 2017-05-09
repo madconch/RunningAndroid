@@ -69,6 +69,8 @@ public class MadTitleBar extends Toolbar {
         this.addView(leftButtonContainer);
         this.addView(titleView);
         this.addView(rightButtonContainer);
+
+        this.setBackgroundColor(config.provideTitleBarBackgroundColor(getContext()));
     }
 
     @Override

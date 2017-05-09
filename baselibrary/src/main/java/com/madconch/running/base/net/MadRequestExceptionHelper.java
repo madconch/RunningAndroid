@@ -6,7 +6,7 @@ import android.support.annotation.StringRes;
 
 import com.google.gson.JsonParseException;
 import com.madconch.running.base.R;
-import com.madconch.running.base.config.BaseConfig;
+import com.madconch.running.base.config.MadBaseConfig;
 import com.madconch.running.ui.loading.ILoadingHelper;
 import com.madconch.running.ui.toast.MadToast;
 import com.madconch.running.utillibrary.MadNetworkUtils;
@@ -61,7 +61,7 @@ public class MadRequestExceptionHelper {
     }
 
     public static String getErrorMessage(Throwable ex, @StringRes int unknownErrorMsg) {
-        return getErrorMessage(BaseConfig.getContextProvider().provideContext(), ex, unknownErrorMsg);
+        return getErrorMessage(MadBaseConfig.getContextProvider().provideContext(), ex, unknownErrorMsg);
     }
 
     public static String getErrorMessage(Context context, Throwable ex) {
@@ -69,7 +69,7 @@ public class MadRequestExceptionHelper {
     }
 
     public static String getErrorMessage(Throwable ex) {
-        return getErrorMessage(BaseConfig.getContextProvider().provideContext(), ex);
+        return getErrorMessage(MadBaseConfig.getContextProvider().provideContext(), ex);
     }
 
     public static void tip(Throwable ex) {

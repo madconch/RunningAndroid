@@ -1,4 +1,4 @@
-package com.madconch.running.base.common;
+package com.madconch.running.base.widget.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

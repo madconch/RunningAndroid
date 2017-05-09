@@ -9,5 +9,5 @@ import com.madconch.running.uiconfig.refresh.IRefreshLayout;
  */
 
 public interface IRefreshProvider extends ILoadingProvider {
-    IRefreshLayout getRefreshLayout();
+    IRefreshLayout provideRefreshLayout();
 }

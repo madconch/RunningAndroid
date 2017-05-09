@@ -1,4 +1,4 @@
-package com.madconch.running.base.common;
+package com.madconch.running.base.widget.adapter;
 
 /**
  * 功能描述:简单的Adapter不用考虑ViewHolder

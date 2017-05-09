@@ -1,5 +1,7 @@
 package com.madconch.running.uiimpl.toolbar;
 
+import android.content.Context;
+
 import com.madconch.running.uiconfig.config.MadUIConfig;
 import com.madconch.running.uiconfig.toolbar.ITitlelbarConfig;
 import com.madconch.running.uiimpl.R;
@@ -14,6 +16,11 @@ public class TitleBarConfig implements ITitlelbarConfig {
     @Override
     public int provideBackButtonImageResource() {
         return R.mipmap.ic_back;
+    }
+
+    @Override
+    public int provideTitleBarBackgroundColor(Context context) {
+        return context.getResources().getColor(R.color.theme_color);
     }
 
     @Override

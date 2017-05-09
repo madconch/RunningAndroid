@@ -13,7 +13,7 @@ import io.reactivex.Observable;
  * Email:496349136@qq.com
  */
 
-public abstract class MadRefreshHelper<T> extends MadPagingHelper<T> implements MadPagingHelper.IPagingCallback<T> {
+public class MadRefreshHelper<T> extends MadPagingHelper<T> implements MadPagingHelper.IPagingCallback<T> {
     public interface RefreshCallback<T> {
         Observable<T> onRequestData();
 

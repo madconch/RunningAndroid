@@ -2,7 +2,6 @@ package com.madconch.running.base.helper.paging;
 
 import android.support.annotation.NonNull;
 
-import com.madconch.running.base.common.RetryListener;
 import com.madconch.running.base.common.SimpleObserver;
 import com.madconch.running.base.common.TransformerProvider;
 import com.madconch.running.ui.loading.ILoadingHelper;
@@ -16,9 +15,10 @@ import io.reactivex.Observable;
  * Email:496349136@qq.com
  */
 
-public class MadPagingHelper<T> implements IRefreshLayout.OnRefreshLoadMoreListener{
-    public interface IPagingCallback<T>{
+public class MadPagingHelper<T> implements IRefreshLayout.OnRefreshLoadMoreListener {
+    public interface IPagingCallback<T> {
         Observable<T> onRequestData(int pageIndex, int pageSize);
+
         void onBindData(int pageIndex, int pageSize, T data);
     }
 
@@ -40,7 +40,7 @@ public class MadPagingHelper<T> implements IRefreshLayout.OnRefreshLoadMoreListe
         }
 
         @Override
-        public IRefreshLayout getRefreshLayout() {
+        public IRefreshLayout provideRefreshLayout() {
             return refreshLayout;
         }
 
@@ -59,7 +59,7 @@ public class MadPagingHelper<T> implements IRefreshLayout.OnRefreshLoadMoreListe
         this.pagingCallback = pagingCallback;
     }
 
-    private RetryListener refreshRetryListener = new RetryListener() {
+    private ILoadingHelper.OnRetryListener refreshRetryListener = new ILoadingHelper.OnRetryListener() {
         @Override
         public void onRetry(ILoadingHelper loadingHelper) {
             startLoading();
@@ -74,17 +74,17 @@ public class MadPagingHelper<T> implements IRefreshLayout.OnRefreshLoadMoreListe
     }
 
     public MadPagingHelper(@NonNull IRefreshLayout refreshLayout, @NonNull ILifeCycleProvider lifeCycleProvider, @NonNull ILoadingHelper loadingHelper, int startPageNumber, int pageSize) {
-        this(refreshLayout,lifeCycleProvider,loadingHelper);
+        this(refreshLayout, lifeCycleProvider, loadingHelper);
         this.startPageNumber = startPageNumber;
         this.pageSize = pageSize;
     }
 
-    public void startRefresh(){
+    public void startRefresh() {
         refreshLayout.startRefresh();
     }
 
-    public void startLoading(){
-        requestData(startPageNumber,pageSize);
+    public void startLoading() {
+        requestData(startPageNumber, pageSize);
     }
 
     @Override
@@ -97,22 +97,27 @@ public class MadPagingHelper<T> implements IRefreshLayout.OnRefreshLoadMoreListe
         requestData(curPageIndex + 1, pageSize);
     }
 
-    protected void requestData(final int pageIndex, final int pageSize){
-        pagingCallback.onRequestData(pageIndex,pageSize)
-                .compose(TransformerProvider.<T>providePagingTransformer(lifeCycleProvider,pagingProvider,refreshRetryListener))
-                .subscribe(new SimpleObserver<T>(){
+    protected void requestData(final int pageIndex, final int pageSize) {
+        pagingCallback.onRequestData(pageIndex, pageSize)
+                .compose(TransformerProvider.<T>providePagingTransformer(lifeCycleProvider, pagingProvider, refreshRetryListener))
+                .subscribe(new SimpleObserver<T>() {
                     @Override
                     public void onNext(T t) {
                         super.onNext(t);
                         haveData = true;
                         curPageIndex = pageIndex;
-                        pagingCallback.onBindData(pageIndex,pageSize,t);
+                        pagingCallback.onBindData(pageIndex, pageSize, t);
                     }
                 });
     }
 
     public void setHaveMoreData(boolean haveMoreData) {
         this.haveMoreData = haveMoreData;
+        if (haveMoreData) {
+            refreshLayout.setLoadMoreEnable(true);
+        } else {
+            refreshLayout.setRefreshEnable(true);
+        }
     }
 
     public void setHaveData(boolean haveData) {

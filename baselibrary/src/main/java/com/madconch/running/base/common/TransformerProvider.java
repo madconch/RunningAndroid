@@ -9,6 +9,7 @@ import com.madconch.running.base.helper.paging.IPagingProvider;
 import com.madconch.running.base.helper.paging.IRefreshProvider;
 import com.madconch.running.base.net.MadRequestExceptionHelper;
 import com.madconch.running.ui.dialog.MadProgressDialog;
+import com.madconch.running.ui.loading.ILoadingHelper;
 import com.madconch.running.ui.toast.MadToast;
 
 import io.reactivex.Observable;
@@ -109,7 +110,7 @@ public class TransformerProvider {
      * @param retryListener  提供重试接口
      * @return
      */
-    public static <T> ObservableTransformer<T, T> provideRefreshTransformer(final ILifeCycleProvider lifeCycle, final IRefreshProvider refreshProvider, final RetryListener retryListener) {
+    public static <T> ObservableTransformer<T, T> provideRefreshTransformer(final ILifeCycleProvider lifeCycle, final IRefreshProvider refreshProvider, final ILoadingHelper.OnRetryListener retryListener) {
         return new ObservableTransformer<T, T>() {
             @Override
             public ObservableSource<T> apply(Observable<T> upstream) {
@@ -146,8 +147,8 @@ public class TransformerProvider {
                         .doAfterTerminate(new Action() {
                             @Override
                             public void run() throws Exception {
-                                refreshProvider.getRefreshLayout().refreshCompleted();
-                                refreshProvider.getRefreshLayout().loadMoreCompleted();
+                                refreshProvider.provideRefreshLayout().refreshCompleted();
+                                refreshProvider.provideRefreshLayout().loadMoreCompleted();
                             }
                         });
             }
@@ -162,7 +163,7 @@ public class TransformerProvider {
      * @param retryListener  提供重试接口
      * @return
      */
-    public static <T> ObservableTransformer<T, T> providePagingTransformer(final ILifeCycleProvider lifeCycle, final IPagingProvider pagingProvider, final RetryListener retryListener) {
+    public static <T> ObservableTransformer<T, T> providePagingTransformer(final ILifeCycleProvider lifeCycle, final IPagingProvider pagingProvider, final ILoadingHelper.OnRetryListener retryListener) {
         return new ObservableTransformer<T, T>() {
             @Override
             public ObservableSource<T> apply(Observable<T> upstream) {
@@ -199,13 +200,13 @@ public class TransformerProvider {
                         .doAfterTerminate(new Action() {
                             @Override
                             public void run() throws Exception {
-                                pagingProvider.getRefreshLayout().refreshCompleted();
-                                pagingProvider.getRefreshLayout().loadMoreCompleted();
+                                pagingProvider.provideRefreshLayout().refreshCompleted();
+                                pagingProvider.provideRefreshLayout().loadMoreCompleted();
 
                                 if (pagingProvider.haveMoreData()) {
-                                    pagingProvider.getRefreshLayout().setLoadMoreEnable(true);
+                                    pagingProvider.provideRefreshLayout().setLoadMoreEnable(true);
                                 } else {
-                                    pagingProvider.getRefreshLayout().setLoadMoreEnable(false);
+                                    pagingProvider.provideRefreshLayout().setLoadMoreEnable(false);
                                 }
                             }
                         });
@@ -223,7 +224,7 @@ public class TransformerProvider {
      * @param retryListener   提供重试接口
      * @return
      */
-    public static <T> ObservableTransformer<T, T> provideLoadingTransformer(final ILifeCycleProvider lifeCycle, final ILoadingProvider loadingProvider, final RetryListener retryListener) {
+    public static <T> ObservableTransformer<T, T> provideLoadingTransformer(final ILifeCycleProvider lifeCycle, final ILoadingProvider loadingProvider, final ILoadingHelper.OnRetryListener retryListener) {
         return new ObservableTransformer<T, T>() {
             @Override
             public ObservableSource<T> apply(Observable<T> upstream) {
@@ -253,7 +254,7 @@ public class TransformerProvider {
         };
     }
 
-    public static <T> ObservableTransformer<T, T> provideLoadingEmptyTransformer(final ILifeCycleProvider lifeCycle, final ILoadingProvider loadingProvider, final RetryListener retryListener) {
+    public static <T> ObservableTransformer<T, T> provideLoadingEmptyTransformer(final ILifeCycleProvider lifeCycle, final ILoadingProvider loadingProvider, final ILoadingHelper.OnRetryListener retryListener) {
         return new ObservableTransformer<T, T>() {
             @Override
             public ObservableSource<T> apply(Observable<T> upstream) {
@@ -287,7 +288,7 @@ public class TransformerProvider {
         };
     }
 
-    public static <T> ObservableTransformer<T, T> provideBackgroundLoadingTransformer(final ILifeCycleProvider lifeCycle, final ILoadingProvider loadingProvider, final RetryListener retryListener) {
+    public static <T> ObservableTransformer<T, T> provideBackgroundLoadingTransformer(final ILifeCycleProvider lifeCycle, final ILoadingProvider loadingProvider, final ILoadingHelper.OnRetryListener retryListener) {
         return new ObservableTransformer<T, T>() {
             @Override
             public ObservableSource<T> apply(Observable<T> upstream) {
