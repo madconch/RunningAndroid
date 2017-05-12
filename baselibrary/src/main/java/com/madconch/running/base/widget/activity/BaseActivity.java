@@ -1,9 +1,11 @@
 package com.madconch.running.base.widget.activity;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,14 +67,15 @@ public abstract class BaseActivity extends RxAppCompatActivity implements ILifeC
 
         //标题栏
         titleBar = (MadTitleBar) findViewById(R.id.tb_title_bar);
-        setSupportActionBar(titleBar);
         //沉浸式状态栏
         initStatusBar();
         //主体内容
         contentContainer = (FrameLayout) findViewById(R.id.fl_container);
         setContentView(provideContentView(contentContainer));
         //View注入
-        ButterKnife.bind(this,contentContainer);
+        ButterKnife.bind(this, contentContainer);
+
+        setSupportActionBar(provideToolbar());
     }
 
     protected void onReady() {
@@ -145,7 +148,14 @@ public abstract class BaseActivity extends RxAppCompatActivity implements ILifeC
     }
 
     protected int provideStatusBarColor() {
-        return getResources().getColor(com.madconch.running.ui.R.color.theme_color);
+        TypedArray typedArray = getContext().obtainStyledAttributes(new int[]{com.madconch.running.uiconfig.R.attr.themeColor});
+        int themeColor = typedArray.getColor(com.madconch.running.uiconfig.R.styleable.UIConfig_themeColor, getContext().getResources().getColor(R.color.theme_color));
+        typedArray.recycle();
+        return themeColor;
+    }
+
+    protected Toolbar provideToolbar(){
+        return titleBar;
     }
 
     protected boolean isFitsSystemWindows() {
@@ -200,5 +210,10 @@ public abstract class BaseActivity extends RxAppCompatActivity implements ILifeC
     @Override
     public ILoadingHelper provideLoadingHelper() {
         return MadLoadingHelper.with(getContentContainer());
+    }
+
+    @Override
+    public boolean haveData() {
+        return false;
     }
 }

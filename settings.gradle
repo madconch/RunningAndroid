@@ -1,1 +1,1 @@
-include ':app', ':uilibrary', ':uiconfig', ':uiimpl01', ':utillibrary', ':baselibrary', ':mvc', ':mvcdemo'
+include ':app', ':uilibrary', ':uiconfig', ':uiimpl01', ':utillibrary', ':baselibrary', ':mvcLibrary', ':mvcdemo', ':gallerylibrary'

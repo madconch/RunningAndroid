@@ -7,16 +7,23 @@
         android:id="@+id/btn_01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="普通分页页面"/>
+        android:text="普通分页页面" />
+
     <Button
         android:id="@+id/btn_02"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="普通刷新页面"
-        />
+        android:text="普通刷新页面" />
+
     <Button
         android:id="@+id/btn_03"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="简单的列表分页页面"/>
+        android:text="简单的列表分页页面" />
+
+    <Button
+        android:id="@+id/btn_04"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="图库" />
 </LinearLayout>

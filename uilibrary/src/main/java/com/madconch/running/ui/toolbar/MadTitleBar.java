@@ -1,6 +1,7 @@
 package com.madconch.running.ui.toolbar;
 
 import android.content.Context;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -126,6 +127,17 @@ public class MadTitleBar extends Toolbar {
         return button;
     }
 
+    public TextView addRightTextButton(@StringRes int resId, @ColorInt int bgColor, @ColorInt int textColor) {
+        TextView button = getTextButton(resId, bgColor, textColor);
+        rightButtonContainer.addView(button);
+        int padding = config.provideMenuSpacing();
+        button.setPadding(padding, 0, padding, 0);
+        MarginLayoutParams mlp = (MarginLayoutParams) button.getLayoutParams();
+        mlp.rightMargin = padding;
+        button.setLayoutParams(mlp);
+        return button;
+    }
+
     public ImageView addLeftImageButton(@DrawableRes int resId) {
         ImageView button = getImageButton(resId);
         leftButtonContainer.addView(button);
@@ -149,6 +161,20 @@ public class MadTitleBar extends Toolbar {
         button.setTextAppearance(getContext(), config.provideMenuStyle());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
         button.setLayoutParams(lp);
+        return button;
+    }
+
+    private TextView getTextButton(@StringRes int resId, @ColorInt int bgColor, @ColorInt int textColor) {
+        TextView button = new TextView(this.getContext());
+        button.setText(resId);
+        button.setGravity(Gravity.CENTER);
+        button.setTextAppearance(getContext(), config.provideMenuStyle());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        lp.gravity = Gravity.CENTER_VERTICAL;
+        lp.height = (int) (getHeight() * 0.8);
+        button.setLayoutParams(lp);
+        button.setTextColor(textColor);
+        button.setBackgroundColor(bgColor);
         return button;
     }
 
@@ -189,5 +215,4 @@ public class MadTitleBar extends Toolbar {
     public LinearLayout getRightButtonContainer() {
         return rightButtonContainer;
     }
-
 }

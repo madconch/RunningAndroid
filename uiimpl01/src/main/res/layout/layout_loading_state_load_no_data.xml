@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="@string/loading_state_load_refresh"
-            android:textColor="@color/theme_color"
+            android:textColor="?attr/themeColor"
             android:visibility="gone" />
     </LinearLayout>
 </FrameLayout>
