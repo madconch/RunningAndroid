@@ -1,4 +1,15 @@
 apply plugin: 'com.android.library'
+apply from: file("${rootDir}/bintray.gradle")
+
+ext {
+    //bintrayInfo
+    bintrayName = 'gallerylibrary'
+
+    //library info
+    libraryName = 'gallerylibrary'
+    artifact = 'gallerylibrary'
+    libraryDescription = 'Running Android - the config interface of uilibrary'
+}
 
 android {
     compileSdkVersion 25

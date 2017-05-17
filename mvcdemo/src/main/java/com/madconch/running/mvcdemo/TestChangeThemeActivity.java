@@ -18,6 +18,9 @@ public class TestChangeThemeActivity extends BaseActivity {
     protected void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
         getTitleBar().addRightTextButton(R.string.complete);
+        showBackButton();
+        //在AndroidManifest文件里面配置的主题
+        setTitle("主题切换Demo");
     }
 
     @Override
