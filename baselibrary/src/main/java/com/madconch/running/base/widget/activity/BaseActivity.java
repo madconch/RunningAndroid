@@ -118,7 +118,24 @@ public abstract class BaseActivity extends RxAppCompatActivity implements ILifeC
      * 沉浸式状态栏
      */
     private void initStatusBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        TypedArray typedArray = getContext().obtainStyledAttributes(R.styleable.UIConfigStyle);
+        boolean statusBarColorIsLightMode = typedArray.getBoolean(R.styleable.UIConfigStyle_uiStatusBarColorIsLightMode, true);
+        typedArray.recycle();
+        boolean isUseSystemTintManager;
+        if (statusBarColorIsLightMode) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                isUseSystemTintManager = false;
+            } else {
+                isUseSystemTintManager = true;
+            }
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                isUseSystemTintManager = false;
+            } else {
+                isUseSystemTintManager = true;
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isUseSystemTintManager) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
                     | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
@@ -126,6 +143,12 @@ public abstract class BaseActivity extends RxAppCompatActivity implements ILifeC
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && statusBarColorIsLightMode) {
+                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            }
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(provideStatusBarColor());
             if (isNeedSetNavgigationBarColor()) {

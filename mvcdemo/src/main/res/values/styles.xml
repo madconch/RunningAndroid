@@ -15,7 +15,18 @@
         <item name="uiTitleBarMenuTextColor">#fff</item>
         <item name="uiTitleBarBackButtonResource">@mipmap/ic_back</item>
         <item name="uiStatusBarColor">@color/colorTheme</item>
+        <item name="uiStatusBarColorIsLightMode">false</item>
         <item name="uiNavigationBarColor">#000</item>
+    </style>
+
+    <style name="TestTheme1" parent="AppTheme">
+        <item name="uiStatusBarColor">#fff</item>
+        <item name="colorPrimaryDark">#fff</item>
+        <item name="uiThemeColor">#000</item>
+        <item name="uiTitleBarBackgroundColor">#fff</item>
+        <item name="uiTitleBarTitleTextColor">#999</item>
+        <item name="uiTitleBarMenuTextColor">#999</item>
+        <item name="uiStatusBarColorIsLightMode">true</item>
     </style>
 
     <style name="TransparentDialog">

@@ -10,6 +10,7 @@
         <attr name="uiTitleBarMenuTextColor" format="reference|color" />
         <attr name="uiTitleBarBackButtonResource" format="reference" />
         <attr name="uiStatusBarColor" format="reference|color" />
+        <attr name="uiStatusBarColorIsLightMode" format="boolean" />
         <attr name="uiNavigationBarColor" format="reference|color" />
     </declare-styleable>
 
@@ -21,6 +22,7 @@
         <item name="uiTitleBarMenuTextColor">#ff00ff</item>
         <item name="uiTitleBarBackButtonResource">@mipmap/ic_back</item>
         <item name="uiStatusBarColor">#ff00ff</item>
+        <item name="uiStatusBarColorIsLightMode">true</item>
         <item name="uiNavigationBarColor">#ff00ff</item>
     </style>
 </resources>

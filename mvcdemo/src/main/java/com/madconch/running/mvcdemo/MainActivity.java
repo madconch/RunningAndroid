@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity {
         return false;
     }
 
-    @OnClick({R.id.btn_01, R.id.btn_02, R.id.btn_03, R.id.btn_04})
+    @OnClick({R.id.btn_01, R.id.btn_02, R.id.btn_03, R.id.btn_04, R.id.btn_05})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_01:
@@ -51,6 +51,8 @@ public class MainActivity extends BaseActivity {
             case R.id.btn_04:
                 startActivity(new Intent(this, PictureManagerActivity.class));
                 break;
+            case R.id.btn_05:
+                startActivity(new Intent(this, TestChangeThemeActivity.class));
             default:
                 break;
         }

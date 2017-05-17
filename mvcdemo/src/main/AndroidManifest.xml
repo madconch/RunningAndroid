@@ -25,6 +25,9 @@
         <activity android:name=".TestPagingActivity" />
         <activity android:name=".TestRefreshActivity" />
         <activity android:name=".TestSimpleListActivity" />
+        <activity
+            android:name=".TestChangeThemeActivity"
+            android:theme="@style/TestTheme1" />
         <activity android:name=".TestActivity">
 
         </activity>
