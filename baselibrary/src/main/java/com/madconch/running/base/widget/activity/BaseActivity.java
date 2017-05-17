@@ -2,6 +2,7 @@ package com.madconch.running.base.widget.activity;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -127,15 +128,21 @@ public abstract class BaseActivity extends RxAppCompatActivity implements ILifeC
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(provideStatusBarColor());
+            if (isNeedSetNavgigationBarColor()) {
+                window.setNavigationBarColor(provideNavigationBarColor());
+            }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 透明状态栏
             getWindow().addFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             SystemStatusManager tintManager = new SystemStatusManager(this);
             tintManager.setStatusBarTintEnabled(true);
-            tintManager.setNavigationBarTintEnabled(true);
             // 设置状态栏的颜色
             tintManager.setStatusBarTintColor(provideStatusBarColor());
+            if (isNeedSetNavgigationBarColor()) {
+                tintManager.setNavigationBarTintEnabled(true);
+                tintManager.setNavigationBarTintColor(provideNavigationBarColor());
+            }
             getWindow().getDecorView().setFitsSystemWindows(true);
         }
 
@@ -148,13 +155,30 @@ public abstract class BaseActivity extends RxAppCompatActivity implements ILifeC
     }
 
     protected int provideStatusBarColor() {
-        TypedArray typedArray = getContext().obtainStyledAttributes(new int[]{com.madconch.running.uiconfig.R.attr.themeColor});
-        int themeColor = typedArray.getColor(com.madconch.running.uiconfig.R.styleable.UIConfig_themeColor, getContext().getResources().getColor(R.color.theme_color));
+        TypedArray typedArray = getContext().obtainStyledAttributes(R.styleable.UIConfigStyle);
+        int themeColor = typedArray.getColor(R.styleable.UIConfigStyle_uiStatusBarColor, getContext().getResources().getColor(R.color.theme_color));
         typedArray.recycle();
         return themeColor;
     }
 
-    protected Toolbar provideToolbar(){
+    protected int provideNavigationBarColor() {
+        TypedArray typedArray = getContext().obtainStyledAttributes(R.styleable.UIConfigStyle);
+        int themeColor = typedArray.getColor(R.styleable.UIConfigStyle_uiNavigationBarColor, Color.BLACK);
+        typedArray.recycle();
+        return themeColor;
+    }
+
+    protected boolean isNeedSetNavgigationBarColor() {
+        TypedArray typedArray = getContext().obtainStyledAttributes(R.styleable.UIConfigStyle);
+        boolean isNeed = false;
+        if (typedArray.hasValue(R.styleable.UIConfigStyle_uiNavigationBarColor)) {
+            isNeed = true;
+        }
+        typedArray.recycle();
+        return isNeed;
+    }
+
+    protected Toolbar provideToolbar() {
         return titleBar;
     }
 

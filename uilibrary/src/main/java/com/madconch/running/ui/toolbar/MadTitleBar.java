@@ -1,10 +1,12 @@
 package com.madconch.running.ui.toolbar;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -13,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.madconch.running.uiconfig.toolbar.ITitlelbarConfig;
+import com.madconch.running.uiconfig.toolbar.ITitleBarConfig;
 import com.madconch.running.uiimpl.toolbar.TitleBarConfig;
 
 /**
@@ -22,7 +24,7 @@ import com.madconch.running.uiimpl.toolbar.TitleBarConfig;
  */
 
 public class MadTitleBar extends Toolbar {
-    private ITitlelbarConfig config = new TitleBarConfig();
+    private ITitleBarConfig config = new TitleBarConfig();
     public static final int DRAWABLE_LEFT = 1;
     public static final int DRAWABLE_RIGHT = 2;
     public static final int DRAWABLE_TOP = 3;
@@ -65,7 +67,11 @@ public class MadTitleBar extends Toolbar {
         titleView.setGravity(Gravity.CENTER);
         titleView.setTextAppearance(getContext(), config.provideTitleStyle());
 
-        btnBack = getImageButton(config.provideBackButtonImageResource());
+        btnBack = getImageButton(config.provideBackButtonImageResource(getContext()));
+        if (config.backButtonIsTint()) {
+            DrawableCompat.setTint(btnBack.getDrawable(), config.provideBackButtonTintColor(getContext()));
+            DrawableCompat.setTintMode(btnBack.getDrawable(), PorterDuff.Mode.SRC_IN);
+        }
 
         this.addView(leftButtonContainer);
         this.addView(titleView);

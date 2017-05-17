@@ -8,10 +8,11 @@ import android.content.Context;
  * Email:496349136@qq.com
  */
 
-public interface ITitlelbarConfig {
-    int provideBackButtonImageResource();
+public interface ITitleBarConfig {
+    int provideBackButtonImageResource(Context context);
 
     int provideTitleBarBackgroundColor(Context context);
+
     /***
      * 提供菜单之间的间距 px
      */
@@ -20,4 +21,14 @@ public interface ITitlelbarConfig {
     int provideTitleStyle();
 
     int provideMenuStyle();
+
+    /***
+     * 返回按钮是否跟随主题
+     */
+    boolean backButtonIsTint();
+
+    /***
+     * 返回按钮跟随的主题颜色
+     */
+    int provideBackButtonTintColor(Context context);
 }

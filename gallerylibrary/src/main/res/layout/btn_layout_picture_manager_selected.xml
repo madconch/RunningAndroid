@@ -14,7 +14,7 @@
         android:gravity="center"
         android:layout_gravity="center_vertical"
         android:paddingRight="5dp"
-        android:textColor="?attr/themeColor"
+        android:textColor="?attr/uiThemeColor"
         android:background="@drawable/sel_btn_bg_select"
         android:textSize="15sp" />
 </FrameLayout>

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="Theme.ToolBar.Base.Title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">17sp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">?attr/uiTitleBarTitleTextColor</item>
+
     </style>
 
     <style name="Theme.ToolBar.Base.Menu" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">?attr/uiTitleBarMenuTextColor</item>
     </style>
 </resources>

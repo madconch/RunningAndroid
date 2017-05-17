@@ -30,8 +30,8 @@
             android:layout_height="40dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp"
-            android:background="?attr/themeColor"
+            android:background="?attr/uiThemeColor"
             android:text="@string/loading_state_load_need_login_btn_login"
-            android:textColor="@android:color/white" />
+            android:textColor="?attr/uiThemeTextColor"/>
     </LinearLayout>
 </FrameLayout>

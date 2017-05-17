@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="UIConfig">
-        <attr name="themeColor" format="reference"/>
-    </declare-styleable>
-</resources>

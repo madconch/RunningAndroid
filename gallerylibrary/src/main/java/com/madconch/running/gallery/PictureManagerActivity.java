@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
@@ -13,7 +15,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -140,8 +144,9 @@ public class PictureManagerActivity extends BaseActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
-        TypedArray typedArray = getContext().obtainStyledAttributes(new int[]{com.madconch.running.uiconfig.R.attr.themeColor});
-        themeColor = typedArray.getColor(com.madconch.running.uiconfig.R.styleable.UIConfig_themeColor, getContext().getResources().getColor(R.color.theme_color));
+        TypedArray typedArray = getContext().obtainStyledAttributes(R.styleable.UIConfigStyle);
+        themeColor = typedArray.getColor(R.styleable.UIConfigStyle_uiThemeColor, getContext().getResources().getColor(R.color.theme_color));
+        int themeTextColor = typedArray.getColor(R.styleable.UIConfigStyle_uiThemeTextColor, Color.WHITE);
         typedArray.recycle();
 
         tvFolder = getTitleBar().getTitleView();
@@ -149,7 +154,11 @@ public class PictureManagerActivity extends BaseActivity {
         tvFolder.setMaxLines(1);
         tvFolder.setEllipsize(TextUtils.TruncateAt.END);
         tvFolder.setCompoundDrawablePadding((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, getResources().getDisplayMetrics()));
-        tvFolder.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.arrow_down), null);
+        Drawable arrowDrawable = getResources().getDrawable(R.mipmap.arrow_down);
+        tvFolder.setCompoundDrawablesWithIntrinsicBounds(null, null, arrowDrawable, null);
+        DrawableCompat.setTint(arrowDrawable, tvFolder.getCurrentTextColor());
+        DrawableCompat.setTintMode(arrowDrawable, PorterDuff.Mode.SRC_IN);
+
 
         folderFragment.setSelectedFolderListener(selectedFolderListener);
         folderAdapter = folderFragment.getFolderAdapter();
@@ -169,6 +178,10 @@ public class PictureManagerActivity extends BaseActivity {
 
         tvPreview = (TextView) findViewById(R.id.btn_preview);
         updateSelectedText();
+        AppCompatImageView iconCamera = (AppCompatImageView) findViewById(R.id.iv_camera_icon);
+        DrawableCompat.setTint(iconCamera.getDrawable(), themeTextColor);
+        DrawableCompat.setTintMode(iconCamera.getDrawable(), PorterDuff.Mode.SRC_IN);
+
         findViewById(R.id.btn_camera).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,7 +253,10 @@ public class PictureManagerActivity extends BaseActivity {
     }
 
     private void showFolderFragment() {
-        tvFolder.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.arrow_up), null);
+        Drawable arrowDrawable = getResources().getDrawable(R.mipmap.arrow_up);
+        tvFolder.setCompoundDrawablesWithIntrinsicBounds(null, null, arrowDrawable, null);
+        DrawableCompat.setTint(arrowDrawable, tvFolder.getCurrentTextColor());
+        DrawableCompat.setTintMode(arrowDrawable, PorterDuff.Mode.SRC_IN);
         if (folderFragment.isAdded()) {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.anim_in_from_top, R.anim.anim_out_from_top, R.anim.anim_in_from_top, R.anim.anim_out_from_top)
@@ -256,7 +272,10 @@ public class PictureManagerActivity extends BaseActivity {
     }
 
     private void hideFolderFragment() {
-        tvFolder.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.arrow_down), null);
+        Drawable arrowDrawable = getResources().getDrawable(R.mipmap.arrow_down);
+        tvFolder.setCompoundDrawablesWithIntrinsicBounds(null, null, arrowDrawable, null);
+        DrawableCompat.setTint(arrowDrawable, tvFolder.getCurrentTextColor());
+        DrawableCompat.setTintMode(arrowDrawable, PorterDuff.Mode.SRC_IN);
         if (folderFragment.isAdded()) {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.anim_in_from_top, R.anim.anim_out_from_top, R.anim.anim_in_from_top, R.anim.anim_out_from_top)

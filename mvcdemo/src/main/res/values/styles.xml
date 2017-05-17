@@ -6,9 +6,18 @@
         <item name="colorPrimary">@color/colorTheme</item>
         <item name="colorPrimaryDark">@color/colorTheme</item>
         <item name="colorAccent">@color/colorTheme</item>
-        <item name="android:textColorPrimary">#fff</item>
-        <item name="themeColor">@color/colorTheme</item>
+        <item name="android:textColorPrimary">#333</item>
+        <item name="android:textSize">14sp</item>
+        <item name="uiThemeColor">@color/colorTheme</item>
+        <item name="uiThemeTextColor">#fff</item>
+        <item name="uiTitleBarBackgroundColor">@color/colorTheme</item>
+        <item name="uiTitleBarTitleTextColor">#fff</item>
+        <item name="uiTitleBarMenuTextColor">#fff</item>
+        <item name="uiTitleBarBackButtonResource">@mipmap/ic_back</item>
+        <item name="uiStatusBarColor">@color/colorTheme</item>
+        <item name="uiNavigationBarColor">#000</item>
     </style>
+
     <style name="TransparentDialog">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>

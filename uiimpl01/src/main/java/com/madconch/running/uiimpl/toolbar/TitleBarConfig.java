@@ -2,9 +2,10 @@ package com.madconch.running.uiimpl.toolbar;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 
 import com.madconch.running.uiconfig.config.MadUIConfig;
-import com.madconch.running.uiconfig.toolbar.ITitlelbarConfig;
+import com.madconch.running.uiconfig.toolbar.ITitleBarConfig;
 import com.madconch.running.uiimpl.R;
 
 /**
@@ -13,16 +14,19 @@ import com.madconch.running.uiimpl.R;
  * Email:496349136@qq.com
  */
 
-public class TitleBarConfig implements ITitlelbarConfig {
+public class TitleBarConfig implements ITitleBarConfig {
     @Override
-    public int provideBackButtonImageResource() {
-        return R.mipmap.ic_back;
+    public int provideBackButtonImageResource(Context context) {
+        TypedArray typedArray = context.obtainStyledAttributes(R.styleable.UIConfigStyle);
+        int backButton = typedArray.getResourceId(R.styleable.UIConfigStyle_uiTitleBarBackButtonResource, R.mipmap.ic_back);
+        typedArray.recycle();
+        return backButton;
     }
 
     @Override
     public int provideTitleBarBackgroundColor(Context context) {
-        TypedArray typedArray = context.obtainStyledAttributes(new int[]{com.madconch.running.uiconfig.R.attr.themeColor});
-        int themeColor = typedArray.getColor(com.madconch.running.uiconfig.R.styleable.UIConfig_themeColor, context.getResources().getColor(R.color.theme_color));
+        TypedArray typedArray = context.obtainStyledAttributes(R.styleable.UIConfigStyle);
+        int themeColor = typedArray.getColor(R.styleable.UIConfigStyle_uiTitleBarBackgroundColor, context.getResources().getColor(R.color.theme_color));
         typedArray.recycle();
         return themeColor;
     }
@@ -40,5 +44,18 @@ public class TitleBarConfig implements ITitlelbarConfig {
     @Override
     public int provideMenuStyle() {
         return R.style.Theme_ToolBar_Base_Menu;
+    }
+
+    @Override
+    public boolean backButtonIsTint() {
+        return true;
+    }
+
+    @Override
+    public int provideBackButtonTintColor(Context context) {
+        TypedArray typedArray = context.obtainStyledAttributes(R.styleable.UIConfigStyle);
+        int themeColor = typedArray.getColor(R.styleable.UIConfigStyle_uiTitleBarTitleTextColor, Color.WHITE);
+        typedArray.recycle();
+        return themeColor;
     }
 }
