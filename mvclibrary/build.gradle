@@ -1,4 +1,15 @@
 apply plugin: 'com.android.library'
+apply from: file("${rootDir}/bintray.gradle")
+
+ext {
+    //bintrayInfo
+    bintrayName = 'mvclibrary'
+
+    //library info
+    libraryName = 'mvclibrary'
+    artifact = 'mvclibrary'
+    libraryDescription = 'Running Android - the mvc frame'
+}
 
 android {
     compileSdkVersion 25
@@ -30,3 +41,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':baselibrary')
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
