@@ -3,28 +3,33 @@ ext {
             module: project(":uiimpl01")
     ]
 
-    versions = []
+    versions = [
+            "androidSupportVersion": "25.3.1",
+            "rxlifecycleVersion"   : "2.0.1",
+            "retrofit2Version"     : "2.2.0",
+            "butterknife"          : "8.5.1"
+    ]
     dependencies = [
             "junit"                    : "junit:junit:4.12",
-            "appcompat-v7"             : "com.android.support:appcompat-v7:25.3.1",
-            "recyclerview"             : "com.android.support:recyclerview-v7:25.3.1",
-            "cardview-v7"              : "com.android.support:cardview-v7:25.3.1",
-            "support-v4"               : "com.android.support:support-v4:25.3.1",
+            "appcompat-v7"             : "com.android.support:appcompat-v7:${versions["androidSupportVersion"]}",
+            "recyclerview"             : "com.android.support:recyclerview-v7:${versions["androidSupportVersion"]}",
+            "cardview-v7"              : "com.android.support:cardview-v7:${versions["androidSupportVersion"]}",
+            "support-v4"               : "com.android.support:support-v4:${versions["androidSupportVersion"]}",
             "uiimpl"                   : project(":uiimpl01"),
             "rxjava2"                  : "io.reactivex.rxjava2:rxjava:2.0.7",
             "rxandroid2"               : "io.reactivex.rxjava2:rxandroid:2.0.1",
             "rxpermission2"            : "com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar",
-            "rxlifecycle2"             : "com.trello.rxlifecycle2:rxlifecycle:2.0.1",
-            "rxlifecycle2-android"     : "com.trello.rxlifecycle2:rxlifecycle-android:2.0.1",
-            "rxlifecycle2-components"  : "com.trello.rxlifecycle2:rxlifecycle-components:2.0.1",
+            "rxlifecycle2"             : "com.trello.rxlifecycle2:rxlifecycle:${versions["rxlifecycleVersion"]}",
+            "rxlifecycle2-android"     : "com.trello.rxlifecycle2:rxlifecycle-android:${versions["rxlifecycleVersion"]}",
+            "rxlifecycle2-components"  : "com.trello.rxlifecycle2:rxlifecycle-components:${versions["rxlifecycleVersion"]}",
             "gifdrawable"              : "pl.droidsonroids.gif:android-gif-drawable:1.2.5",
             "tkrefreshlayout"          : "com.lcodecorex:tkrefreshlayout:1.0.7",
             "constraint-layout"        : "com.android.support.constraint:constraint-layout:1.0.2",
-            "retrofit2"                : "com.squareup.retrofit2:retrofit:2.2.0",
-            "retrofit2-converter-gson" : "com.squareup.retrofit2:converter-gson:2.2.0",
-            "retrofit2-adapter-rxjava2": "com.squareup.retrofit2:adapter-rxjava2:2.2.0",
-            "butterknife"              : "com.jakewharton:butterknife:8.5.1",
-            "butterknife-compiler"     : "com.jakewharton:butterknife-compiler:8.5.1",
+            "retrofit2"                : "com.squareup.retrofit2:retrofit:${versions["retrofit2Version"]}",
+            "retrofit2-converter-gson" : "com.squareup.retrofit2:converter-gson:${versions["retrofit2Version"]}",
+            "retrofit2-adapter-rxjava2": "com.squareup.retrofit2:adapter-rxjava2:${versions["retrofit2Version"]}",
+            "butterknife"              : "com.jakewharton:butterknife:${versions["butterknife"]}",
+            "butterknife-compiler"     : "com.jakewharton:butterknife-compiler:${versions["butterknife"]}",
             "glide"                    : "com.github.bumptech.glide:glide:3.8.0"
     ]
 }
