@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply from: file("${project.rootDir}/madconfig.gradle")
 apply from: file("${rootDir}/bintray.gradle")
 
 ext {
@@ -37,10 +36,10 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    testCompile 'junit:junit:4.12'
+    compile rootProject.ext.dependencies["appcompat-v7"]
+    testCompile rootProject.ext.dependencies["junit"]
+    compile rootProject.ext.dependencies["uiimpl"]
     compile project(':uiconfig')
-    compile uiImplModuleConfig['module']
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'

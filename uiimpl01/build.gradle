@@ -37,11 +37,13 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    testCompile 'junit:junit:4.12'
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.5'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile ('com.lcodecorex:tkrefreshlayout:1.0.7'){
+
+    compile rootProject.ext.dependencies["appcompat-v7"]
+    testCompile rootProject.ext.dependencies["junit"]
+    compile rootProject.ext.dependencies["constraint-layout"]
+
+    compile rootProject.ext.dependencies["gifdrawable"]
+    compile(rootProject.ext.dependencies["tkrefreshlayout"]) {
         exclude group: 'com.android.support'
     }
     compile project(':uiconfig')
