@@ -46,6 +46,7 @@ dependencies {
     compile rootProject.ext.dependencies["glide"]
     compile rootProject.ext.dependencies["cardview-v7"]
     compile rootProject.ext.dependencies["support-v4"]
+    provided rootProject.ext.dependencies["uiimpl"]
 }
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

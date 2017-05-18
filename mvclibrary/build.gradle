@@ -39,6 +39,7 @@ dependencies {
     })
     compile rootProject.ext.dependencies["appcompat-v7"]
     testCompile rootProject.ext.dependencies["junit"]
+    provided rootProject.ext.dependencies["uiimpl"]
     compile project(':baselibrary')
 }
 

@@ -179,7 +179,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements ILifeC
 
     protected int provideStatusBarColor() {
         TypedArray typedArray = getContext().obtainStyledAttributes(R.styleable.UIConfigStyle);
-        int themeColor = typedArray.getColor(R.styleable.UIConfigStyle_uiStatusBarColor, getContext().getResources().getColor(R.color.theme_color));
+        int themeColor = typedArray.getColor(R.styleable.UIConfigStyle_uiStatusBarColor, Color.BLACK);
         typedArray.recycle();
         return themeColor;
     }

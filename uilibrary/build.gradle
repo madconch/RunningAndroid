@@ -38,7 +38,7 @@ dependencies {
     })
     compile rootProject.ext.dependencies["appcompat-v7"]
     testCompile rootProject.ext.dependencies["junit"]
-    compile rootProject.ext.dependencies["uiimpl"]
+    provided rootProject.ext.dependencies["uiimpl"]
     compile project(':uiconfig')
 }
 

@@ -4,7 +4,7 @@ ext {
 
     //library info
     publishedGroupId = 'com.madconch.running'
-    libraryVersion = '0.0.3'
+    libraryVersion = '0.0.4'
     siteUrl = 'https://github.com/madconch/RunningAndroid'
     gitUrl = 'https://github.com/madconch/RunningAndroid.git'
 

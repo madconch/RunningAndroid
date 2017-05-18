@@ -27,6 +27,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile rootProject.ext.dependencies["uiimpl"]
     compile project(':mvclibrary')
     compile project(':gallerylibrary')
     compile rootProject.ext.dependencies["appcompat-v7"]
