@@ -48,7 +48,7 @@ public class TitleBarConfig implements ITitleBarConfig {
 
     @Override
     public boolean backButtonIsTint() {
-        return true;
+        return false;
     }
 
     @Override
