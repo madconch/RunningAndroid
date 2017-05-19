@@ -55,6 +55,9 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     compile rootProject.ext.dependencies["recyclerview"]
     provided rootProject.ext.dependencies["uiimpl"]
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.1'
+    }
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
