@@ -1,8 +1,4 @@
 ext {
-    uiImplModuleConfig = [
-            module: project(":uiimpl01")
-    ]
-
     versions = [
             "androidSupportVersion": "25.3.1",
             "rxlifecycleVersion"   : "2.0.1",
