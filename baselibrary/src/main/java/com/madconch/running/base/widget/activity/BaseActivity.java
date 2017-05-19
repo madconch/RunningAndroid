@@ -21,6 +21,7 @@ import com.madconch.running.base.helper.paging.ILoadingProvider;
 import com.madconch.running.ui.loading.ILoadingHelper;
 import com.madconch.running.ui.loading.MadLoadingHelper;
 import com.madconch.running.ui.toolbar.MadTitleBar;
+import com.madconch.running.uiconfig.config.MadUIConfig;
 import com.madconch.running.utillibrary.savesate.MadSaveStateUtil;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -118,8 +119,8 @@ public abstract class BaseActivity extends RxAppCompatActivity implements ILifeC
      * 沉浸式状态栏
      */
     private void initStatusBar() {
-        TypedArray typedArray = getContext().obtainStyledAttributes(R.styleable.UIConfigStyle);
-        boolean statusBarColorIsLightMode = typedArray.getBoolean(R.styleable.UIConfigStyle_uiStatusBarColorIsLightMode, true);
+        TypedArray typedArray = MadUIConfig.getMadUITheme(getContext());
+        boolean statusBarColorIsLightMode = typedArray.getBoolean(R.styleable.MadUITheme_uiStatusBarColorIsLightMode, true);
         typedArray.recycle();
         boolean isUseSystemTintManager;
         if (statusBarColorIsLightMode) {
@@ -178,23 +179,23 @@ public abstract class BaseActivity extends RxAppCompatActivity implements ILifeC
     }
 
     protected int provideStatusBarColor() {
-        TypedArray typedArray = getContext().obtainStyledAttributes(R.styleable.UIConfigStyle);
-        int themeColor = typedArray.getColor(R.styleable.UIConfigStyle_uiStatusBarColor, Color.BLACK);
+        TypedArray typedArray = MadUIConfig.getMadUITheme(getContext());
+        int themeColor = typedArray.getColor(R.styleable.MadUITheme_uiStatusBarColor, Color.BLACK);
         typedArray.recycle();
         return themeColor;
     }
 
     protected int provideNavigationBarColor() {
-        TypedArray typedArray = getContext().obtainStyledAttributes(R.styleable.UIConfigStyle);
-        int themeColor = typedArray.getColor(R.styleable.UIConfigStyle_uiNavigationBarColor, Color.BLACK);
+        TypedArray typedArray = MadUIConfig.getMadUITheme(getContext());
+        int themeColor = typedArray.getColor(R.styleable.MadUITheme_uiNavigationBarColor, Color.BLACK);
         typedArray.recycle();
         return themeColor;
     }
 
     protected boolean isNeedSetNavgigationBarColor() {
-        TypedArray typedArray = getContext().obtainStyledAttributes(R.styleable.UIConfigStyle);
+        TypedArray typedArray = MadUIConfig.getMadUITheme(getContext());
         boolean isNeed = false;
-        if (typedArray.hasValue(R.styleable.UIConfigStyle_uiNavigationBarColor)) {
+        if (typedArray.hasValue(R.styleable.MadUITheme_uiNavigationBarColor)) {
             isNeed = true;
         }
         typedArray.recycle();

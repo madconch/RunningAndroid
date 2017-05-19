@@ -17,16 +17,16 @@ import com.madconch.running.uiimpl.R;
 public class TitleBarConfig implements ITitleBarConfig {
     @Override
     public int provideBackButtonImageResource(Context context) {
-        TypedArray typedArray = context.obtainStyledAttributes(R.styleable.UIConfigStyle);
-        int backButton = typedArray.getResourceId(R.styleable.UIConfigStyle_uiTitleBarBackButtonResource, R.mipmap.ic_back);
+        TypedArray typedArray = MadUIConfig.getMadUITheme(context);
+        int backButton = typedArray.getResourceId(R.styleable.MadUITheme_uiTitleBarBackButtonResource, R.mipmap.ic_back);
         typedArray.recycle();
         return backButton;
     }
 
     @Override
     public int provideTitleBarBackgroundColor(Context context) {
-        TypedArray typedArray = context.obtainStyledAttributes(R.styleable.UIConfigStyle);
-        int themeColor = typedArray.getColor(R.styleable.UIConfigStyle_uiTitleBarBackgroundColor, context.getResources().getColor(R.color.theme_color));
+        TypedArray typedArray = MadUIConfig.getMadUITheme(context);
+        int themeColor = typedArray.getColor(R.styleable.MadUITheme_uiTitleBarBackgroundColor, context.getResources().getColor(R.color.theme_color));
         typedArray.recycle();
         return themeColor;
     }
@@ -53,8 +53,8 @@ public class TitleBarConfig implements ITitleBarConfig {
 
     @Override
     public int provideBackButtonTintColor(Context context) {
-        TypedArray typedArray = context.obtainStyledAttributes(R.styleable.UIConfigStyle);
-        int themeColor = typedArray.getColor(R.styleable.UIConfigStyle_uiTitleBarTitleTextColor, Color.WHITE);
+        TypedArray typedArray = MadUIConfig.getMadUITheme(context);
+        int themeColor = typedArray.getColor(R.styleable.MadUITheme_uiTitleBarTitleTextColor, Color.WHITE);
         typedArray.recycle();
         return themeColor;
     }

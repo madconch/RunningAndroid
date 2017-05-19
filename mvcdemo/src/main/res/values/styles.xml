@@ -8,15 +8,15 @@
         <item name="colorAccent">@color/colorTheme</item>
         <item name="android:textColorPrimary">#333</item>
         <item name="android:textSize">14sp</item>
-        <item name="uiThemeColor">@color/colorTheme</item>
-        <item name="uiThemeTextColor">#fff</item>
-        <item name="uiTitleBarBackgroundColor">@color/colorTheme</item>
-        <item name="uiTitleBarTitleTextColor">#fff</item>
-        <item name="uiTitleBarMenuTextColor">#fff</item>
-        <item name="uiTitleBarBackButtonResource">@mipmap/ic_back</item>
-        <item name="uiStatusBarColor">@color/colorTheme</item>
-        <item name="uiStatusBarColorIsLightMode">false</item>
-        <item name="uiNavigationBarColor">#000</item>
+        <item name="uiThemeColor">#0055ff</item><!--主题颜色-->
+        <item name="uiThemeTextColor">#fff</item><!--如果背景是主题颜色,那么默认的字体颜色-->
+        <item name="uiTitleBarBackgroundColor">#0055ff</item><!--标题栏的背景色-->
+        <item name="uiTitleBarTitleTextColor">#aaa</item><!--标题栏的标题文字颜色-->
+        <item name="uiTitleBarMenuTextColor">#aaa</item><!--标题栏的菜单颜色-->
+        <!--<item name="uiTitleBarBackButtonResource">@mipmap/ic_back</item>--><!--标题栏的返回按钮图片-->
+        <item name="uiStatusBarColor">#0055ff</item><!--状态栏颜色-->
+        <item name="uiStatusBarColorIsLightMode">false</item><!--状态栏颜色是否是浅色，6.0以上(如果true那么状态栏文字颜色是黑色,否则白色) 6.0以下(true,那么整个状态栏半透明;false 完全透明,字体白色)-->
+        <item name="uiNavigationBarColor">#000</item><!--导航栏颜色-->
     </style>
 
     <style name="TestTheme1" parent="AppTheme">

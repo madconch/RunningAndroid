@@ -35,6 +35,7 @@ import com.madconch.running.base.widget.activity.BaseActivity;
 import com.madconch.running.base.widget.adapter.SimpleAdapter;
 import com.madconch.running.base.widget.adapter.ViewHolder;
 import com.madconch.running.ui.toast.MadToast;
+import com.madconch.running.uiconfig.config.MadUIConfig;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
@@ -144,9 +145,9 @@ public class PictureManagerActivity extends BaseActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
-        TypedArray typedArray = getContext().obtainStyledAttributes(R.styleable.UIConfigStyle);
-        themeColor = typedArray.getColor(R.styleable.UIConfigStyle_uiThemeColor, getContext().getResources().getColor(R.color.theme_color));
-        int themeTextColor = typedArray.getColor(R.styleable.UIConfigStyle_uiThemeTextColor, Color.WHITE);
+        TypedArray typedArray = MadUIConfig.getMadUITheme(getContext());
+        themeColor = typedArray.getColor(R.styleable.MadUITheme_uiThemeColor, getContext().getResources().getColor(R.color.theme_color));
+        int themeTextColor = typedArray.getColor(R.styleable.MadUITheme_uiThemeTextColor, Color.WHITE);
         typedArray.recycle();
 
         tvFolder = getTitleBar().getTitleView();
