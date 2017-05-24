@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply from: file("${rootDir}/config.gradle")
 
 android {
     compileSdkVersion 25
@@ -32,11 +33,11 @@ dependencies {
     compile project(':gallerylibrary')
     compile rootProject.ext.dependencies["appcompat-v7"]
     testCompile rootProject.ext.dependencies["junit"]
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     compile rootProject.ext.dependencies["glide"]
     compile rootProject.ext.dependencies["cardview-v7"]
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 configurations.all {

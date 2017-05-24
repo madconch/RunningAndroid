@@ -1,36 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <Button
-        android:id="@+id/btn_01"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="普通分页页面"/>
 
-    <Button
-        android:id="@+id/btn_02"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="普通刷新页面"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_03"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="简单的列表分页页面" />
+        <Button
+            android:id="@+id/btn_01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="普通分页页面" />
 
-    <Button
-        android:id="@+id/btn_04"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="图库" />
+        <Button
+            android:id="@+id/btn_02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="普通刷新页面" />
 
-    <Button
-        android:id="@+id/btn_05"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="切换主题" />
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_03"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="简单的列表分页页面" />
+
+        <Button
+            android:id="@+id/btn_04"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="图库" />
+
+        <Button
+            android:id="@+id/btn_05"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="切换主题" />
+
+        <Button
+            android:id="@+id/btn_06"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请求拨打电话" />
+
+        <Button
+            android:id="@+id/btn_07"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请求安装apk" />
+
+        <Button
+            android:id="@+id/btn_08"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请求拍照" />
+
+        <Button
+            android:id="@+id/btn_09"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请求进度" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

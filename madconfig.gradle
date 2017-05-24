@@ -19,7 +19,6 @@ ext {
             "rxlifecycle2-android"     : "com.trello.rxlifecycle2:rxlifecycle-android:${versions["rxlifecycleVersion"]}",
             "rxlifecycle2-components"  : "com.trello.rxlifecycle2:rxlifecycle-components:${versions["rxlifecycleVersion"]}",
             "gifdrawable"              : "pl.droidsonroids.gif:android-gif-drawable:1.2.5",
-            "tkrefreshlayout"          : "com.lcodecorex:tkrefreshlayout:1.0.7",
             "constraint-layout"        : "com.android.support.constraint:constraint-layout:1.0.2",
             "retrofit2"                : "com.squareup.retrofit2:retrofit:${versions["retrofit2Version"]}",
             "retrofit2-converter-gson" : "com.squareup.retrofit2:converter-gson:${versions["retrofit2Version"]}",

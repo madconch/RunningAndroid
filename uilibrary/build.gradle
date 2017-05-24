@@ -36,8 +36,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile rootProject.ext.dependencies["appcompat-v7"]
-    testCompile rootProject.ext.dependencies["junit"]
+    provided rootProject.ext.dependencies["appcompat-v7"]
+    testProvided rootProject.ext.dependencies["junit"]
     provided rootProject.ext.dependencies["uiimpl"]
     compile project(':uiconfig')
 }

@@ -53,7 +53,8 @@ public class MadSaveStateUtil {
      * 按照列表顺序依次查找key
      * @return
      */
-    public static <T> T getValueFromBundles(String key,T defaultValue,Bundle...froms){
+    @SuppressWarnings("unchecked")
+    public static <T> T getValueFromBundles(String key, T defaultValue, Bundle...froms){
         Object value = null;
         for(Bundle from : froms){
             if(from != null){

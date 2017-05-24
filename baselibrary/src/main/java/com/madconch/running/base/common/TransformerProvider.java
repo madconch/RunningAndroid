@@ -1,6 +1,7 @@
 package com.madconch.running.base.common;
 
 import android.content.DialogInterface;
+import android.support.annotation.Nullable;
 
 import com.madconch.running.base.config.ContextProvider;
 import com.madconch.running.base.helper.paging.ILifeCycleProvider;
@@ -11,8 +12,13 @@ import com.madconch.running.base.net.MadRequestExceptionHelper;
 import com.madconch.running.ui.dialog.MadProgressDialog;
 import com.madconch.running.ui.loading.ILoadingHelper;
 import com.madconch.running.ui.toast.MadToast;
+import com.madconch.running.utillibrary.file.MadFileUtil;
+
+import java.io.File;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -20,7 +26,9 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 
 /**
  * 功能描述:@TODO 填写功能描述
@@ -348,6 +356,42 @@ public class TransformerProvider {
                             @Override
                             public void run() throws Exception {
                                 progressDialog.dismiss();
+                            }
+                        });
+            }
+        };
+    }
+
+    public static ObservableTransformer<ResponseBody, File> provideDownloadTransformer(final ILifeCycleProvider lifeCycle) {
+        return provideDownloadTransformer(lifeCycle, null);
+    }
+
+    public static ObservableTransformer<ResponseBody, File> provideDownloadTransformer(final ILifeCycleProvider lifeCycle, @Nullable final String path) {
+        return new ObservableTransformer<ResponseBody, File>() {
+            @Override
+            public ObservableSource<File> apply(Observable<ResponseBody> upstream) {
+                return upstream
+                        .compose(lifeCycle.<ResponseBody>bindLifecycle())
+                        .compose(TransformerProvider.<ResponseBody>provideSchedulers())
+                        .compose(TransformerProvider.<ResponseBody>provideErrorHandler())
+                        .flatMap(new Function<ResponseBody, ObservableSource<File>>() {
+                            @Override
+                            public ObservableSource<File> apply(@NonNull final ResponseBody responseBody) throws Exception {
+                                return Observable.create(new ObservableOnSubscribe<File>() {
+                                    @Override
+                                    public void subscribe(ObservableEmitter<File> e) throws Exception {
+                                        File file;
+                                        if (path == null) {
+                                            file = MadFileUtil.getRandomFile();
+                                        } else {
+                                            file = new File(path);
+                                        }
+
+                                        MadFileUtil.writeFile(responseBody.byteStream(), file, true);
+                                        e.onNext(file);
+                                        e.onComplete();
+                                    }
+                                });
                             }
                         });
             }

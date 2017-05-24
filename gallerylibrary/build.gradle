@@ -37,16 +37,23 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile rootProject.ext.dependencies["appcompat-v7"]
-    testCompile rootProject.ext.dependencies["junit"]
+    provided rootProject.ext.dependencies["appcompat-v7"]
+    testProvided rootProject.ext.dependencies["junit"]
     compile project(':baselibrary')
-    compile rootProject.ext.dependencies["butterknife"]
+    provided rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
-    compile rootProject.ext.dependencies["constraint-layout"]
-    compile rootProject.ext.dependencies["glide"]
-    compile rootProject.ext.dependencies["cardview-v7"]
-    compile rootProject.ext.dependencies["support-v4"]
+    provided rootProject.ext.dependencies["constraint-layout"]
+    provided rootProject.ext.dependencies["glide"]
+    provided rootProject.ext.dependencies["cardview-v7"]
+    provided rootProject.ext.dependencies["support-v4"]
+    provided rootProject.ext.dependencies["recyclerview"]
+    provided rootProject.ext.dependencies["rxjava2"]
+    provided rootProject.ext.dependencies["rxandroid2"]
     provided rootProject.ext.dependencies["uiimpl"]
+    provided rootProject.ext.dependencies["rxlifecycle2"]
+    provided rootProject.ext.dependencies["rxlifecycle2-android"]
+    provided rootProject.ext.dependencies["rxlifecycle2-components"]
+    provided rootProject.ext.dependencies["rxpermission2"]
 }
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

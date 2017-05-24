@@ -15,6 +15,15 @@ import java.io.Serializable;
  */
 
 public class BundleUtil {
+    /***
+     * 从指定的Bundle对象中取值,并自动匹配类型
+     * @param key key
+     * @param from 从什么地方取值
+     * @param <T> 目标类型
+     * @return Bundle中与key对应的值
+     * @throws Exception 取值异常
+     */
+    @SuppressWarnings("unchecked")
     public static <T> T getValueFromBundle(String key, Bundle from) throws Exception {
         try {
             return (T) from.get(key);
@@ -24,7 +33,30 @@ public class BundleUtil {
         }
     }
 
+    /**
+     * 将指定值存放到Bundle对象中
+     * @param key 存放的key
+     * @param value 存放的值
+     * @param target 存放的目标Bundle
+     * @throws Exception 存放过程中的异常,例如不支持指定类型的存放
+     */
     public static void putObjectToBundle(String key, Object value, Bundle target) throws Exception {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (value instanceof Size) {
+                target.putSize(key, (Size) value);
+                return;
+            } else if (value instanceof SizeF) {
+                target.putSizeF(key, (SizeF) value);
+                return;
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            if (value instanceof IBinder) {
+                target.putBinder(key, (IBinder) value);
+                return;
+            }
+        }
+
         if (value instanceof Byte) {
             target.putByte(key, (Byte) value);
             return;
@@ -67,22 +99,6 @@ public class BundleUtil {
         } else if (value instanceof Serializable) {
             target.putSerializable(key, (Serializable) value);
             return;
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (value instanceof Size) {
-                target.putSize(key, (Size) value);
-                return;
-            } else if (value instanceof SizeF) {
-                target.putSizeF(key, (SizeF) value);
-                return;
-            }
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            if (value instanceof IBinder) {
-                target.putBinder(key, (IBinder) value);
-                return;
-            }
         }
 
         throw new Exception("not support this type:" + key + "=" + value);

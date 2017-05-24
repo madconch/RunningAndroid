@@ -32,16 +32,15 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile rootProject.ext.dependencies["appcompat-v7"]
-    testCompile rootProject.ext.dependencies["junit"]
-
-    compile rootProject.ext.dependencies["rxjava2"]
-    compile rootProject.ext.dependencies["rxandroid2"]
-    compile rootProject.ext.dependencies["rxpermission2"]
+    provided rootProject.ext.dependencies["appcompat-v7"]
+    testProvided rootProject.ext.dependencies["junit"]
+    provided rootProject.ext.dependencies["rxjava2"]
+    provided rootProject.ext.dependencies["rxandroid2"]
+    provided rootProject.ext.dependencies["rxpermission2"]
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'

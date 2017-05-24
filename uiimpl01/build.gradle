@@ -43,7 +43,7 @@ dependencies {
     compile rootProject.ext.dependencies["constraint-layout"]
 
     compile rootProject.ext.dependencies["gifdrawable"]
-    compile(rootProject.ext.dependencies["tkrefreshlayout"]) {
+    compile("com.lcodecorex:tkrefreshlayout:1.0.7") {
         exclude group: 'com.android.support'
     }
     compile project(':uiconfig')
