@@ -111,7 +111,8 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(this, RequestProgressActivity.class));
                 break;
             case R.id.btn_10:
-                startActivity(new Intent(this, NavigationActivity.class));
+                MadToast.warn("暂未开通");
+//                startActivity(new Intent(this, NavigationActivity.class));
                 break;
             case R.id.btn_11:
                 startActivity(WebViewActivity.newIntent(this,"百度一下","http://www.baidu.com",false));
