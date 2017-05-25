@@ -3,6 +3,7 @@ package com.madconch.running.base.widget;
 import android.app.Application;
 
 import com.madconch.running.base.config.MadBaseConfig;
+import com.tencent.smtt.sdk.QbSdk;
 
 /**
  * 功能描述:@TODO 填写功能描述
@@ -19,5 +20,16 @@ public class BaseApplication extends Application {
 
     public static void onCreateInit(Application application) {
         MadBaseConfig.init(application);
+        QbSdk.initX5Environment(application.getApplicationContext(), new QbSdk.PreInitCallback() {
+            @Override
+            public void onCoreInitFinished() {
+                System.out.println(">>>onCoreInitFinished");
+            }
+
+            @Override
+            public void onViewInitFinished(boolean b) {
+                System.out.println(">>>onViewInitFinished:" + b);
+            }
+        });
     }
 }

@@ -22,7 +22,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
     buildTypes {
         release {
@@ -39,7 +38,6 @@ dependencies {
     })
     compile rootProject.ext.dependencies["appcompat-v7"]
     testCompile rootProject.ext.dependencies["junit"]
-
     compile project(':uilibrary')
     compile project(':utillibrary')
     provided rootProject.ext.dependencies["retrofit2"]
@@ -58,6 +56,7 @@ dependencies {
     configurations.all {
         resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.1'
     }
+    compile 'com.google.android:flexbox:0.2.6'
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'

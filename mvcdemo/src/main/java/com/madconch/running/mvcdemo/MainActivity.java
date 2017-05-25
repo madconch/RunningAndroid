@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.madconch.running.base.widget.activity.BaseActivity;
+import com.madconch.running.base.widget.activity.WebViewActivity;
 import com.madconch.running.gallery.PictureManagerActivity;
 import com.madconch.running.ui.toast.MadToast;
 import com.madconch.running.utillibrary.MadSystemUtil;
@@ -46,7 +47,7 @@ public class MainActivity extends BaseActivity {
         return false;
     }
 
-    @OnClick({R.id.btn_01, R.id.btn_02, R.id.btn_03, R.id.btn_04, R.id.btn_05, R.id.btn_06, R.id.btn_07, R.id.btn_08, R.id.btn_09})
+    @OnClick({R.id.btn_01, R.id.btn_02, R.id.btn_03, R.id.btn_04, R.id.btn_05, R.id.btn_06, R.id.btn_07, R.id.btn_08, R.id.btn_09,R.id.btn_10,R.id.btn_11})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_01:
@@ -108,6 +109,12 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_09:
                 startActivity(new Intent(this, RequestProgressActivity.class));
+                break;
+            case R.id.btn_10:
+                startActivity(new Intent(this, NavigationActivity.class));
+                break;
+            case R.id.btn_11:
+                startActivity(WebViewActivity.newIntent(this,"百度一下","http://www.baidu.com",false));
                 break;
             default:
                 break;

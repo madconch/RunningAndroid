@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/pb_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp" />
+
+    <com.tencent.smtt.sdk.WebView
+        android:id="@+id/wv_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/flex_operate_container"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        app:flexDirection="row"
+        app:flexWrap="nowrap"
+        app:justifyContent="space_around">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/btn_go_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/ic_chevron_left_black" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/btn_go_forward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/ic_chevron_right_black" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/btn_stop_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:src="@mipmap/ic_close_black" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/btn_reload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:src="@mipmap/ic_refresh_black" />
+
+    </com.google.android.flexbox.FlexboxLayout>
+</LinearLayout>

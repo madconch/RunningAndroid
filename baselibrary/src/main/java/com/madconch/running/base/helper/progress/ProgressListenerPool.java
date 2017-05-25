@@ -20,7 +20,7 @@ import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 功能描述:@TODO 填写功能描述
+ * 功能描述:进度监听器的管理器,负责申请和取消注册监听器
  * Created by LuoHaifeng on 2017/5/24.
  * Email:496349136@qq.com
  */
