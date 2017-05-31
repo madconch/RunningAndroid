@@ -152,7 +152,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements ILifeC
             }
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(provideStatusBarColor());
-            if (isNeedSetNavgigationBarColor()) {
+            if (isNeedSetNavigationBarColor()) {
                 window.setNavigationBarColor(provideNavigationBarColor());
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -163,7 +163,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements ILifeC
             tintManager.setStatusBarTintEnabled(true);
             // 设置状态栏的颜色
             tintManager.setStatusBarTintColor(provideStatusBarColor());
-            if (isNeedSetNavgigationBarColor()) {
+            if (isNeedSetNavigationBarColor()) {
                 tintManager.setNavigationBarTintEnabled(true);
                 tintManager.setNavigationBarTintColor(provideNavigationBarColor());
             }
@@ -192,7 +192,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements ILifeC
         return themeColor;
     }
 
-    protected boolean isNeedSetNavgigationBarColor() {
+    protected boolean isNeedSetNavigationBarColor() {
         TypedArray typedArray = MadUIConfig.getMadUITheme(getContext());
         boolean isNeed = false;
         if (typedArray.hasValue(R.styleable.MadUITheme_uiNavigationBarColor)) {
