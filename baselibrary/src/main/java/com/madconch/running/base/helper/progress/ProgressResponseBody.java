@@ -59,12 +59,19 @@ public class ProgressResponseBody extends ResponseBody {
 
             @Override
             public long read(Buffer sink, long byteCount) throws IOException {
-                long bytesRead = super.read(sink, byteCount);
+                long bytesRead;
+                if (Thread.currentThread().isInterrupted()) {//修复当取消的时候出现异常的情况
+                    bytesRead = -1;
+                } else {
+                    bytesRead = super.read(sink, byteCount);
+                }
+
                 //增加当前读取的字节数，如果读取完成了bytesRead会返回-1
                 totalBytesRead += bytesRead != -1 ? bytesRead : 0;
                 //回调，如果contentLength()不知道长度，会返回-1
-                ProgressUtil.onNext(progressListenerId, new ProgressEntity().setProgress(totalBytesRead).setTotal(contentLength()).setCompleted(bytesRead == -1).setRequest(false));
-                if (bytesRead == -1)
+                boolean isCompleted = bytesRead == -1 && totalBytesRead == contentLength();
+                ProgressUtil.onNext(progressListenerId, new ProgressEntity().setProgress(totalBytesRead).setTotal(contentLength()).setCompleted(isCompleted).setRequest(false));
+                if (isCompleted)
                     ProgressUtil.onComplete(progressListenerId);
                 return bytesRead;
             }

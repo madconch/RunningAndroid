@@ -44,7 +44,7 @@ public class ProgressInterceptor implements Interceptor {
             //代理ResponseBody,处理请求下行进度
             response = response.newBuilder().body(new ProgressResponseBody(response.body(), id)).build();
             return response;
-        } catch (IOException e) {
+        } catch (Exception e) {
             ProgressUtil.onError(id, e);
             throw e;
         }

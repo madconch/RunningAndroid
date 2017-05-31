@@ -13,15 +13,18 @@ import com.madconch.running.base.helper.progress.ProgressListener;
 import com.madconch.running.base.helper.progress.ProgressListenerPool;
 import com.madconch.running.base.widget.activity.BaseActivity;
 import com.madconch.running.ui.toast.MadToast;
+import com.madconch.running.utillibrary.MadSystemUtil;
 import com.madconch.running.utillibrary.file.MadFileUtil;
 
 import java.io.File;
 import java.io.IOException;
 
 import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MultipartBody;
@@ -53,6 +56,28 @@ public class RequestProgressActivity extends BaseActivity {
         setTitle("RequestProgress");
         showBackButton();
 
+        MadSystemUtil.requestExternalStoragePermission(this)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(@NonNull Boolean aBoolean) throws Exception {
+                        if(aBoolean){
+                            request();
+                        }else{
+                            MadToast.error("权限获取失败");
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        MadToast.error("没有读写存储权限");
+                    }
+                });
+
+    }
+
+    private void request(){
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .addInterceptor(new ProgressInterceptor());
         okHttpClient = builder.build();
@@ -93,11 +118,11 @@ public class RequestProgressActivity extends BaseActivity {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-                       MadToast.error("加载异常");
+                        MadToast.error("加载异常");
                     }
                 });
         System.out.println(">>>poolSize:" + ProgressListenerPool.getInstance().getSize());
-        Request request = new Request.Builder().url("http://103.7.28.253/download.sj.qq.com/upload/connAssitantDownload/upload/MobileAssistant_1.apk?mkey=59253c2cd4cf3655&f=6606&c=0&p=.apk&" + ProgressInterceptor.LISTENER_ID_KEY + "=" + listenerId).post(formBody).build();
+        Request request = new Request.Builder().url("http://163.177.76.92/mmgr.myapp.com/msoft/sec/secure/GodDresser/1/2/3/102027/tencentmobilemanager_20170510223353_7.0.0_android_build3992_102027.apk?mkey=5928ead3d4cf3655&f=105&c=0&p=.apk&" + ProgressInterceptor.LISTENER_ID_KEY + "=" + listenerId).post(formBody).build();
 //        Request request = new Request.Builder().url("http://pic55.nipic.com/file/20141208/19462408_171130083000_2.jpg?" + ProgressInterceptor.LISTENER_ID_KEY + "=" + listenerId).build();
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override

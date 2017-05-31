@@ -263,4 +263,13 @@ public class WebViewActivity extends BaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(webView != null){
+            webView.destroy();
+            webView = null;
+        }
+    }
 }

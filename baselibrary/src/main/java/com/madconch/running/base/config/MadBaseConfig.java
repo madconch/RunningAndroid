@@ -29,4 +29,8 @@ public class MadBaseConfig {
     public static ContextProvider getContextProvider() {
         return contextProvider;
     }
+
+    public static String getFileProviderAuthority() {
+        return contextProvider.provideContext().getPackageName() + ".fileProvider";
+    }
 }

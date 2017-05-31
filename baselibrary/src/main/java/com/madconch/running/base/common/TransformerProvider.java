@@ -61,6 +61,20 @@ public class TransformerProvider {
 //        };
 //    }
 
+    public static <T extends K, K> ObservableTransformer<T, K> convertToSuperInterface() {
+        return new ObservableTransformer<T, K>() {
+            @Override
+            public ObservableSource<K> apply(Observable<T> upstream) {
+                return upstream.map(new Function<T, K>() {
+                    @Override
+                    public K apply(@NonNull T t) throws Exception {
+                        return t;
+                    }
+                });
+            }
+        };
+    }
+
     /**
      * 提供最基础的线程切换,订阅在子线程,响应在主线程
      *
@@ -374,6 +388,7 @@ public class TransformerProvider {
                         .compose(lifeCycle.<ResponseBody>bindLifecycle())
                         .compose(TransformerProvider.<ResponseBody>provideSchedulers())
                         .compose(TransformerProvider.<ResponseBody>provideErrorHandler())
+                        .observeOn(Schedulers.io())
                         .flatMap(new Function<ResponseBody, ObservableSource<File>>() {
                             @Override
                             public ObservableSource<File> apply(@NonNull final ResponseBody responseBody) throws Exception {
@@ -393,7 +408,8 @@ public class TransformerProvider {
                                     }
                                 });
                             }
-                        });
+                        })
+                        .observeOn(AndroidSchedulers.mainThread());
             }
         };
     }
