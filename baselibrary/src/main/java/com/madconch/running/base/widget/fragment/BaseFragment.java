@@ -16,6 +16,7 @@ import com.madconch.running.ui.loading.MadLoadingHelper;
 import com.madconch.running.ui.toolbar.MadTitleBar;
 import com.madconch.running.utillibrary.savesate.MadSaveStateUtil;
 import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import butterknife.ButterKnife;
@@ -106,7 +107,7 @@ public abstract class BaseFragment extends RxFragment implements ILifeCycleProvi
 
     @Override
     public <T> LifecycleTransformer<T> bindLifecycle() {
-        return bindToLifecycle();
+        return bindUntilEvent(FragmentEvent.DESTROY);
     }
 
     @Override

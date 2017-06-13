@@ -24,6 +24,7 @@ import com.madconch.running.ui.toolbar.MadTitleBar;
 import com.madconch.running.uiconfig.config.MadUIConfig;
 import com.madconch.running.utillibrary.savesate.MadSaveStateUtil;
 import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
@@ -252,7 +253,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements ILifeC
 
     @Override
     public <T> LifecycleTransformer<T> bindLifecycle() {
-        return bindToLifecycle();
+        return bindUntilEvent(ActivityEvent.DESTROY);
     }
 
     @Override
