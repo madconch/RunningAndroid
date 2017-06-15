@@ -148,9 +148,12 @@ public class MainActivity extends BaseActivity {
                         });
 
                 break;
-            case R.id.btn_13:
-                startActivity(SingeFragmentActivity.newIntent(this, TestSingleFragment.class));
+            case R.id.btn_13: {
+                Intent intent = SingeFragmentActivity.newIntent(this, TestSingleFragment.class);
+                intent.putExtra(TestSingleFragment.KEY_TEST, "1111");
+                startActivity(intent);
                 break;
+            }
             default:
                 break;
         }

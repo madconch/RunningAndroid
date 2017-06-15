@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import com.madconch.running.base.widget.adapter.ViewHolder;
 import com.madconch.running.mvc.base.fragment.SimpleListFragment;
+import com.madconch.running.ui.toast.MadToast;
+import com.madconch.running.utillibrary.savesate.SaveState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +26,17 @@ import io.reactivex.Observable;
 public class TestSingleFragment extends SimpleListFragment<String> {
     List<String> datas = new ArrayList<>();
 
+    public static final String KEY_TEST = "testParam";
+
+    @SaveState(key = KEY_TEST)
+    String testParam = "default testParam";
     @Override
     protected void init(View root, @Nullable Bundle savedInstanceState) {
         for (int i = 1; i <= 50; i++) {
             datas.add("This is Item " + i);
         }
+
+        MadToast.info(testParam);
     }
 
     @Override
