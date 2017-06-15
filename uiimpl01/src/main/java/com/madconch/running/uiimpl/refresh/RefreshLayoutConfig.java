@@ -24,6 +24,7 @@ public class RefreshLayoutConfig implements IRefreshLayoutConfig {
         layout.setEnableOverScroll(false);
         layout.setHeaderView(new SinaRefreshView(layout.getContext()));
         layout.setBottomView(new LoadingView(layout.getContext()));
+        layout.proxyOnFinishInflate();
     }
 
     @Override

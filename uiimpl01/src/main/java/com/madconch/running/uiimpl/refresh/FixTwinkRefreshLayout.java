@@ -1,6 +1,7 @@
 package com.madconch.running.uiimpl.refresh;
 
 import android.content.Context;
+import android.util.AttributeSet;
 
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
@@ -13,7 +14,15 @@ import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 public class FixTwinkRefreshLayout extends TwinklingRefreshLayout {
 
     public FixTwinkRefreshLayout(Context context) {
-        super(context);
+        this(context, null);
+    }
+
+    public FixTwinkRefreshLayout(Context context, AttributeSet attrs) {
+        this(context, attrs, -1);
+    }
+
+    public FixTwinkRefreshLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         init();
     }
 
@@ -25,5 +34,9 @@ public class FixTwinkRefreshLayout extends TwinklingRefreshLayout {
                 onFinishInflate();
             }
         });
+    }
+
+    public void proxyOnFinishInflate(){
+        onFinishInflate();
     }
 }
