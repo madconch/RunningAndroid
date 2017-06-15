@@ -26,14 +26,14 @@
                 android:resource="@xml/file_paths" />
         </provider>
         <activity android:name=".SplashActivity">
+
+        </activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".MainActivity">
-
         </activity>
         <activity android:name=".TestPagingActivity" />
         <activity android:name=".TestRefreshActivity" />
@@ -41,7 +41,8 @@
         <activity
             android:name=".TestChangeThemeActivity"
             android:theme="@style/TestTheme1" />
-        <activity android:name=".TestActivity" />
+        <activity android:name=".TestActivity" >
+        </activity>
         <activity android:name=".RequestProgressActivity" />
         <activity android:name=".NavigationActivity"></activity>
     </application>

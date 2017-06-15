@@ -80,5 +80,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="检测更新" />
+
+        <Button
+            android:id="@+id/btn_13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fragment转换为Activity" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

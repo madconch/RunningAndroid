@@ -13,6 +13,7 @@ import com.madconch.running.base.helper.update.IUpdateEntity;
 import com.madconch.running.base.helper.update.UpdateManager;
 import com.madconch.running.base.helper.update.UpdateResult;
 import com.madconch.running.base.widget.activity.BaseActivity;
+import com.madconch.running.base.widget.activity.SingeFragmentActivity;
 import com.madconch.running.base.widget.activity.WebViewActivity;
 import com.madconch.running.gallery.PictureManagerActivity;
 import com.madconch.running.ui.toast.MadToast;
@@ -38,12 +39,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
-        findViewById(R.id.btn_01).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), TestPagingActivity.class));
-            }
-        });
 //        getTitleBar().instanceTextView(getTitleBar().getRightButtonContainer()).setText("查看");
 //        getTitleBar().instanceTextView(getTitleBar().getRightButtonContainer()).setText("取消");
     }
@@ -53,7 +48,7 @@ public class MainActivity extends BaseActivity {
         return false;
     }
 
-    @OnClick({R.id.btn_01, R.id.btn_02, R.id.btn_03, R.id.btn_04, R.id.btn_05, R.id.btn_06, R.id.btn_07, R.id.btn_08, R.id.btn_09, R.id.btn_10, R.id.btn_11, R.id.btn_12})
+    @OnClick({R.id.btn_01, R.id.btn_02, R.id.btn_03, R.id.btn_04, R.id.btn_05, R.id.btn_06, R.id.btn_07, R.id.btn_08, R.id.btn_09, R.id.btn_10, R.id.btn_11, R.id.btn_12, R.id.btn_13})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_01:
@@ -126,7 +121,7 @@ public class MainActivity extends BaseActivity {
                 Observable.just(new TestUpdateEntity())
                         .compose(TransformerProvider.<TestUpdateEntity>provideSchedulers(this))
                         .compose(TransformerProvider.<TestUpdateEntity, IUpdateEntity>convertToSuperInterface())
-                        .compose(UpdateManager.provideUpdateTransformer(this,this))
+                        .compose(UpdateManager.provideUpdateTransformer(this, this))
                         .subscribe(new Consumer<UpdateResult>() {
                             @Override
                             public void accept(@NonNull UpdateResult updateResult) throws Exception {
@@ -152,6 +147,9 @@ public class MainActivity extends BaseActivity {
                             }
                         });
 
+                break;
+            case R.id.btn_13:
+                startActivity(SingeFragmentActivity.newIntent(this, TestSingleFragment.class));
                 break;
             default:
                 break;
