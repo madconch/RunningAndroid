@@ -11,7 +11,7 @@ import android.support.v4.content.FileProvider;
 
 import com.madconch.running.utillibrary.file.MadFileUtil;
 import com.madconch.running.utillibrary.proxy.MadProxyUtil;
-import com.madconch.running.utillibrary.proxy.ProxyRequestCallback;
+import com.madconch.running.utillibrary.proxy.ProxyResultBean;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
@@ -22,6 +22,7 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -181,18 +182,23 @@ public class MadSystemUtil {
                         return Observable.create(new ObservableOnSubscribe<String>() {
                             @Override
                             public void subscribe(final ObservableEmitter<String> e) throws Exception {
-                                MadProxyUtil.startActivityForResultProxy(activity, data, new ProxyRequestCallback() {
-                                    @Override
-                                    public void onResult(Intent data) {
-                                        e.onNext(savePath);
-                                        e.onComplete();
-                                    }
-
-                                    @Override
-                                    public void onOther(Intent data) {
-                                        e.onComplete();
-                                    }
-                                });
+                                MadProxyUtil.startActivityForResultProxy(activity, data)
+                                        .subscribe(new Consumer<ProxyResultBean>() {
+                                            @Override
+                                            public void accept(@NonNull ProxyResultBean proxyResultBean) throws Exception {
+                                                if (proxyResultBean.getResultCode() == Activity.RESULT_OK) {
+                                                    e.onNext(savePath);
+                                                    e.onComplete();
+                                                } else {
+                                                    e.onComplete();
+                                                }
+                                            }
+                                        }, new Consumer<Throwable>() {
+                                            @Override
+                                            public void accept(@NonNull Throwable throwable) throws Exception {
+                                                e.onComplete();
+                                            }
+                                        });
                             }
                         });
                     }

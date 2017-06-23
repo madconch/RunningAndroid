@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="MenuItemStyle" format="reference" />
+    <attr name="MenuPanelStyle" format="reference" />
+
+    <declare-styleable name="MenuPanel">
+        <attr name="dividerLeftPadding" format="dimension|reference" />
+        <attr name="dividerRightPadding" format="dimension|reference" />
+        <attr name="dividerDrawable" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="MenuItem">
+        <attr name="leftText" format="string|reference" />
+        <attr name="rightText" format="string|reference" />
+        <attr name="leftTextColor" format="color|reference" />
+        <attr name="rightTextColor" format="color|reference" />
+        <attr name="leftTextSize" format="dimension|reference" />
+        <attr name="rightTextSize" format="dimension|reference" />
+        <attr name="leftLeftDrawable" format="reference" />
+        <attr name="leftRightDrawable" format="reference" />
+        <attr name="rightLeftDrawable" format="reference" />
+        <attr name="rightRightDrawable" format="reference" />
+        <attr name="leftDrawablePadding" format="dimension|reference" />
+        <attr name="rightDrawablePadding" format="dimension|reference" />
+    </declare-styleable>
+
+    <style name="DefaultMenuItemStyle">
+        <item name="leftTextColor">#333</item>
+        <item name="rightTextColor">#666</item>
+        <item name="leftTextSize">15sp</item>
+        <item name="rightTextSize">14sp</item>
+    </style>
+
+    <style name="DefaultMenuPanelStyle">
+        <item name="dividerLeftPadding">0dp</item>
+        <item name="dividerRightPadding">0dp</item>
+        <item name="dividerDrawable">@drawable/shape_default_menu_divider</item>
+    </style>
+</resources>

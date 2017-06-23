@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.madconch.running.mvcdemo.MenuActivity">
+
+    <com.madconch.running.base.widget.view.menu.MenuPanel
+        style="@style/MenuPanelStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.madconch.running.base.widget.view.menu.MenuItem
+            style="@style/MenuItemStyle"
+            app:leftText="新消息提醒"
+            app:rightDrawablePadding="5dp"
+            app:rightRightDrawable="@mipmap/ic_navigate_next_black_24dp" />
+
+        <com.madconch.running.base.widget.view.menu.MenuItem
+            style="@style/MenuItemStyle"
+            app:leftText="清除缓存"
+            app:rightDrawablePadding="5dp"
+            app:rightRightDrawable="@mipmap/ic_navigate_next_black_24dp"
+            app:rightText="500MB" />
+    </com.madconch.running.base.widget.view.menu.MenuPanel>
+
+    <com.madconch.running.base.widget.view.menu.MenuPanel
+        style="@style/MenuPanelStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <com.madconch.running.base.widget.view.menu.MenuItem
+            style="@style/MenuItemStyle"
+            app:leftDrawablePadding="5dp"
+            app:leftLeftDrawable="@mipmap/ic_highlight_black_24dp"
+            app:leftText="新消息提醒" />
+
+        <com.madconch.running.base.widget.view.menu.MenuItem
+            style="@style/MenuItemStyle"
+            app:leftText="设置" />
+    </com.madconch.running.base.widget.view.menu.MenuPanel>
+</LinearLayout>

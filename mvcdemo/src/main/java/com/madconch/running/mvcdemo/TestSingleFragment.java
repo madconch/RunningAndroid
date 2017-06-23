@@ -30,6 +30,7 @@ public class TestSingleFragment extends SimpleListFragment<String> {
 
     @SaveState(key = KEY_TEST)
     String testParam = "default testParam";
+
     @Override
     protected void init(View root, @Nullable Bundle savedInstanceState) {
         for (int i = 1; i <= 50; i++) {
@@ -37,6 +38,12 @@ public class TestSingleFragment extends SimpleListFragment<String> {
         }
 
         MadToast.info(testParam);
+    }
+
+    public static Bundle newParams(String testParam) {
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_TEST, testParam);
+        return bundle;
     }
 
     @Override

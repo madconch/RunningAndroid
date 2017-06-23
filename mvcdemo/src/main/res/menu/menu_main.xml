@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_item_add"
+        android:title="2131"
         app:actionLayout="@layout/btn_button"
-        app:showAsAction="always"
-        android:title="2131" />
+        app:showAsAction="always" />
     <item
         android:title="21312"
         app:actionLayout="@layout/btn_text"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always" />
 </menu>

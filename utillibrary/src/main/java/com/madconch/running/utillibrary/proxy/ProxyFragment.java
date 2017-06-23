@@ -9,6 +9,10 @@ import android.util.SparseArray;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+
 /**
  * 功能描述:代理的Fragment,支持回调替代startActivityForResult,支持requestCode自动管理
  * Created by LuoHaifeng on 2017/5/23.
@@ -16,7 +20,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 
 public class ProxyFragment extends Fragment {
-    private SparseArray<RequestBean> requestCallbacks = new SparseArray<>();
+    private SparseArray<ProxyRequestBean> requestCallbacks = new SparseArray<>();
     private final Lock requestCodeLock = new ReentrantLock();
     private int autoRequestCode = 0;
 
@@ -26,30 +30,34 @@ public class ProxyFragment extends Fragment {
         }
     }
 
-    public void startActivityForResultProxy(@NonNull Intent intent, @NonNull ProxyRequestCallback callback) {
-        startActivityForResultProxy(Activity.RESULT_OK, intent, callback);
+    public Observable<ProxyResultBean> startActivityForResultProxy(@NonNull Intent intent) {
+        return startActivityForResultProxy(Activity.RESULT_OK, intent);
     }
 
-    public void startActivityForResultProxy(int resultCode, @NonNull Intent intent, @NonNull ProxyRequestCallback callback) {
-        startActivityForResultProxy(getAutoRequestCode(), resultCode, intent, callback);
+    public Observable<ProxyResultBean> startActivityForResultProxy(int resultCode, @NonNull Intent intent) {
+        return startActivityForResultProxy(getAutoRequestCode(), resultCode, intent);
     }
 
-    private void startActivityForResultProxy(int requestCode, int resultCode, @NonNull Intent intent, @NonNull ProxyRequestCallback callback) {
-        RequestBean requestBean = new RequestBean().setRequestCode(requestCode).setResponseCode(resultCode).setCallback(callback);
-        requestCallbacks.put(requestBean.getRequestCode(), requestBean);
-        startActivityForResult(intent, requestCode);
+    private Observable<ProxyResultBean> startActivityForResultProxy(final int requestCode, final int resultCode, @NonNull final Intent intent) {
+        return Observable.create(new ObservableOnSubscribe<ProxyResultBean>() {
+
+            @Override
+            public void subscribe(ObservableEmitter<ProxyResultBean> e) throws Exception {
+                ProxyRequestBean prb = new ProxyRequestBean().setRequestCode(requestCode).setEmitter(e);
+                requestCallbacks.put(requestCode, prb);
+                startActivityForResult(intent, requestCode);
+            }
+        });
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        RequestBean requestBean = requestCallbacks.get(requestCode, null);
+        ProxyRequestBean requestBean = requestCallbacks.get(requestCode, null);
         if (requestBean != null) {
-            if (resultCode == requestBean.getResponseCode()) {
-                requestBean.getCallback().onResult(data);
-            } else {
-                requestBean.getCallback().onOther(data);
-            }
+            requestBean.getEmitter().onNext(new ProxyResultBean().setResultCode(resultCode).setData(data));
+            requestBean.getEmitter().onComplete();
             requestCallbacks.remove(requestCode);
         }
     }

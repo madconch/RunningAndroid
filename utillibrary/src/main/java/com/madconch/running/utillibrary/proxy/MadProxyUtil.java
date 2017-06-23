@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import io.reactivex.Observable;
+
 /**
  * 功能描述:通过代理Fragment简化startActivityForResult
  * Created by LuoHaifeng on 2017/5/23.
@@ -62,10 +64,9 @@ public class MadProxyUtil {
      *
      * @param activity 需要发起跳转的页面
      * @param intent   需要跳转的目标
-     * @param callback 跳转结果回调
      */
-    public static void startActivityForResultProxy(@NonNull FragmentActivity activity, @NonNull Intent intent, @NonNull ProxyRequestCallback callback) {
-        getProxyFragmentByActivity(activity).startActivityForResultProxy(intent, callback);
+    public static Observable<ProxyResultBean> startActivityForResultProxy(@NonNull FragmentActivity activity, @NonNull Intent intent) {
+        return getProxyFragmentByActivity(activity).startActivityForResultProxy(intent);
     }
 
     /**
@@ -74,10 +75,9 @@ public class MadProxyUtil {
      * @param activity   需要发起跳转的页面
      * @param intent     需要跳转的目标
      * @param resultCode 指定判定成功的code
-     * @param callback   跳转结果回调
      */
-    public static void startActivityForResultProxy(@NonNull FragmentActivity activity, int resultCode, @NonNull Intent intent, @NonNull ProxyRequestCallback callback) {
-        getProxyFragmentByActivity(activity).startActivityForResultProxy(resultCode, intent, callback);
+    public static Observable<ProxyResultBean> startActivityForResultProxy(@NonNull FragmentActivity activity, int resultCode, @NonNull Intent intent) {
+        return getProxyFragmentByActivity(activity).startActivityForResultProxy(resultCode, intent);
     }
 
     /**
@@ -85,10 +85,9 @@ public class MadProxyUtil {
      *
      * @param fragment 需要发起跳转的页面
      * @param intent   需要跳转的目标
-     * @param callback 跳转结果回调
      */
-    public static void startActivityForResultProxy(@NonNull Fragment fragment, @NonNull Intent intent, @NonNull ProxyRequestCallback callback) {
-        getProxyFragmentByFragment(fragment).startActivityForResultProxy(intent, callback);
+    public static Observable<ProxyResultBean> startActivityForResultProxy(@NonNull Fragment fragment, @NonNull Intent intent) {
+        return getProxyFragmentByFragment(fragment).startActivityForResultProxy(intent);
     }
 
     /**
@@ -97,9 +96,8 @@ public class MadProxyUtil {
      * @param fragment   需要发起跳转的页面
      * @param intent     需要跳转的目标
      * @param resultCode 指定判定成功的code
-     * @param callback   跳转结果回调
      */
-    public static void startActivityForResultProxy(@NonNull Fragment fragment, int resultCode, @NonNull Intent intent, @NonNull ProxyRequestCallback callback) {
-        getProxyFragmentByFragment(fragment).startActivityForResultProxy(resultCode, intent, callback);
+    public static Observable<ProxyResultBean> startActivityForResultProxy(@NonNull Fragment fragment, int resultCode, @NonNull Intent intent) {
+        return getProxyFragmentByFragment(fragment).startActivityForResultProxy(resultCode, intent);
     }
 }

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="theme_color">#F4723E</color>
+    <color name="default_menu_bg_n">#fff</color>
+    <color name="default_menu_bg_p">#eee</color>
 </resources>
